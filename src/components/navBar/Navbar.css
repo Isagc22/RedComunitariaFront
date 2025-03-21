@@ -1,0 +1,53 @@
+nav.navbar.bg-body-tertiary.navbar-campo-conecta{
+    background: #42E3A9 !important;
+}
+.align-text-top {
+    vertical-align: middle;
+}
+
+.navbar-cc-principal{
+    display: flex;
+    align-items: center;
+}
+
+.nombre-campo-conecta{
+    font-size: 28px;
+    font-weight: 700;
+    font-family: "Cinzel", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    margin: 0;
+}
+
+.contenedor-btns-nav{
+    display: flex;
+    gap: 15px;
+}
+
+.btn-iniciar-sesion{
+    display: flex;
+    gap: 5px;
+
+}
+
+.btn-registrarme{
+    display: flex;
+    gap: 5px;
+
+}
+
+@media (max-width:768px) {
+    .container-fluid.contenedor-info-nav{
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}
+
+@media (max-width:575px) {
+    .container-fluid.contenedor-info-nav{
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+    }
+}
