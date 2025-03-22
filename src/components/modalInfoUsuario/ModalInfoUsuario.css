@@ -2,3 +2,71 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.info-personal {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+}
+
+
+.perfil-usuario {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 16px;
+    cursor: pointer;
+}
+.perfil-usuario:hover{
+    background-color: rgb(214, 207, 207);
+}
+
+.registrar-negocios-usuario{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border: 1px solid #000000;
+    border-radius: 20px;
+    padding: 16px;
+    cursor: pointer;
+    
+}
+.registrar-negocios-usuario:hover{
+    background-color: rgb(214, 207, 207);
+
+}
+
+.modal-body.body-modal-info-usuario {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 30px;
+    justify-content: center;
+}
+
+.btn-cerrar-sesion-usuario{
+    border: 1px solid rgb(233, 81, 81);
+    background: transparent;
+    border-radius: 20px;
+    max-width: max-content;
+    padding: 16px;
+
+    /* Fuente---- */
+    font-size: 16px;
+    font-weight: 400;
+
+}
+
+.btn-cerrar-sesion-usuario:hover{
+    background: rgb(226, 116, 116);
+
+}
+
+.contenedor-btn-cerrar-sesion{
+
+        display: flex;
+        justify-content: center;
+}
