@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import NavBar from './components/navBar/Navbar';
 import NavBarUsuario from './components/navBarUsuario/NavBarUsuario';
+import VistaUsuarios from './components/vistaUsuarios/VistaUsuarios';
+import VistaNegocios from './components/vistaNegociosEmprendimientos/VistaNegociosEmprendimientos';
+
+
+
 
 
 import reportWebVitals from './reportWebVitals';
@@ -10,8 +15,11 @@ import reportWebVitals from './reportWebVitals';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <NavBar /> */}
+    <NavBar />
     <NavBarUsuario />
+    <VistaUsuarios/>
+    <VistaNegocios/>
+
 
 
   </React.StrictMode>

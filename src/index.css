@@ -1,2 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Permanent+Marker&family=Righteous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Revalia&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+
+p{
+    margin: 0;
+    
+}
+
+.bi-eye::before {
+    content: "\f341";
+    color:#000000;
+}
+
+.bi-pencil::before {
+    content: "\f4cb";
+    color: green;
+}
+
+.bi-trash::before {
+    content: "\f5de";
+    color: rgb(182, 27, 27);
+}
+.contenedor{
+    margin: 0 50px ;
+}
+section{
+    padding: 56px 0;
+}
