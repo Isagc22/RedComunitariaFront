@@ -6,7 +6,7 @@ import "./Navbar.css";
 
 export default function Navbar() {
     return (
-        <div>
+        <>
             <nav className="navbar bg-body-tertiary navbar-campo-conecta">
                 <div className="container-fluid contenedor-info-nav">
                     <a className="navbar-brand navbar-cc-principal" href="#">
@@ -19,7 +19,7 @@ export default function Navbar() {
                         />
                         <p className="nombre-campo-conecta">Campo Conecta</p>
                     </a>
-                    <div className="d-flex contenedor-btns-nav" role="search">
+                    <div className="d-flex contenedor-btns-nav">
                         <button
                             type="button"
                             className="btn btn-outline-dark btn-iniciar-sesion"
@@ -44,6 +44,6 @@ export default function Navbar() {
             {/* Agregamos los modales como subcomponentes */}
             <IniciarSesionModal />
             <RegistrarmeModal />
-        </div>
+        </>
     );
 }
