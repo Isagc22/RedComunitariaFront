@@ -1,39 +1,23 @@
-import React from "react";
-import NavBar from "./components/navBar/Navbar";
-import NavBarUsuario from "./components/navBarUsuario/NavBarUsuario";
-import LandingSection from "./components/mainSections/LandingSection";
-import ContentSection from "./components/mainSections/ContentSection";
-import TestimonialSection from "./components/mainSections/TestimonialSection";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import MarketplacePage from "./pages/MarketplacePage";
+import AddProduct from "./pages/AddProduct";
 
+
+//En esta parate es donde contrala la vista de las paginas 
 function App() {
-  const isLoggedIn = false; // Cambia esto según el login real
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Aquí se maneja el login
 
   return (
-    <div className="App">
-      {/* Manejamos la barra de navegación aquí */}
-      {isLoggedIn ? <NavBarUsuario /> : <NavBar />}
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} /> //aqui maneja la vista principal 
+        <Route path="/Marketplace" element={<MarketplacePage />} /> //aqui maneja la vista del mercado
 
-      {/* Secciones principales */}
-      <LandingSection />
-
-      <ContentSection
-        title="How It Works"
-        text="Te ayudamos a conectar tu negocio con el mundo digital."
-        showButton={true}
-      />
-
-      <ContentSection
-        title="Pricing"
-        text="Nuestros servicios son asequibles para todas las comunidades."
-        showButton={false}
-      />
-
-      <TestimonialSection 
-        title="Testimonios"
-        text="Esto es un testimonio"
-        showButton={false}/>
-
-    </div>
+        <Route path="/add-product" element={<AddProduct />} /> //aqui maneja la vista de agregar productos */ 
+      </Routes>
+    </Router>   
   );
 }
 

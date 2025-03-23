@@ -4,7 +4,7 @@ export default function RegistrarmeModal() {
   const [tipoDocumento, setTipoDocumento] = useState("cc");
   const [aceptaTerminos, setAceptaTerminos] = useState(false);
 
-  return (
+  return ( 
     <div
       className="modal fade"
       id="registrarme"
