@@ -1,0 +1,26 @@
+.testimonios {
+    padding: 60px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .testimonios h2 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 30px;
+  }
+  
+  .testimonios blockquote {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: #444;
+    margin: 20px auto;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  
+  .testimonios p {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
