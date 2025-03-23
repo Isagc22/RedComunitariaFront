@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import MarketplacePage from "./pages/MarketplacePage";
 import AddProduct from "./pages/AddProduct";
-
+import Admin from "./pages/VistaAdminPage";
+import UsuarioLogeadoPage from "./pages/UsuarioLogeadoPage";
 
 //En esta parate es donde contrala la vista de las paginas 
 function App() {
@@ -16,6 +17,10 @@ function App() {
         <Route path="/Marketplace" element={<MarketplacePage />} /> //aqui maneja la vista del mercado
 
         <Route path="/add-product" element={<AddProduct />} /> //aqui maneja la vista de agregar productos */ 
+        <Route path="/admin" element={<Admin />} /> //aqui maneja la vista del administrador */ 
+        <Route path="/usuario" element={<UsuarioLogeadoPage />} /> //aqui maneja la vista del usuario */ 
+
+
       </Routes>
     </Router>   
   );

@@ -40,7 +40,7 @@ function MarketplacePage() {
           </Button>
         </Link>
       </Box>
-      //SALTO DE LINEA
+      {/* //SALTO DE LINEA */}
       <br></br>
       
 

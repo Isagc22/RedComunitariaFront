@@ -1,6 +1,5 @@
 .testimonios {
-    padding: 60px 20px;
-    background-color: #f9f9f9;
+    background-color: #cfcdcd;
     text-align: center;
   }
   
@@ -24,3 +23,10 @@
     color: #2c3e50;
   }
   
+  .contenedor-testimonios {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}

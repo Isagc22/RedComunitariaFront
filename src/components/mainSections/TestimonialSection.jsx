@@ -15,13 +15,16 @@ const TestimonialSection = () => {
 
   return (
     <section className="testimonios">
-      <h2>Testimonios</h2>
-      {testimonios.map((t, i) => (
-        <div key={i}>
-          <blockquote>“{t.texto}”</blockquote>
-          <p>- {t.nombre}</p>
-        </div>
-      ))}
+      <div className="contenedor">      
+        <h2>Testimonios</h2>
+        <div className="contenedor-testimonios">
+          {testimonios.map((t, i) => (
+            <div key={i}>
+              <blockquote>“{t.texto}”</blockquote>
+              <p>- {t.nombre}</p>
+            </div>
+          ))}
+        </div></div>
     </section>
   );
 };

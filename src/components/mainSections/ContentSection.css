@@ -1,4 +1,21 @@
-.content {
+
+section.section-card-descubre{
+  background-color: white;
+}
+
+.MuiBox-root.css-1jernzw{
+  background-color: transparent !important;
+  padding: 0;
+}
+
+.MuiGrid-root.MuiGrid-container.MuiGrid-spacing-xs-4.css-4z7gnm-MuiGrid-root {
+  height: auto;
+  align-items: stretch;
+}
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.MuiCard-root.css-1ulmmq5-MuiPaper-root-MuiCard-root {
+  height: 100%;
+}
+/* .content {
   text-align: center;
   padding: 60px 20px;
 }
@@ -25,4 +42,4 @@
 
 .content button:hover {
   background-color: #218838;
-}
+} */

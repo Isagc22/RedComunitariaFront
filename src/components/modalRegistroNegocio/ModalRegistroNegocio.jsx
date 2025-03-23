@@ -56,11 +56,11 @@ export default function ModalRegistroNegocio() {
 
                                     <fieldset>
                                         <div class="mb-3">
-                                            <label for="region" class="col-form-label">Región ubicado:</label>
-                                            <input type="text" class="form-control" id="region" required />
+                                            <label for="produccion" class="col-form-label">Producción:</label>
+                                            <input type="text" class="form-control" id="produccion" required />
                                         </div>
                                         <div class="mb-3">
-                                            <label for="region" class="col-form-label">Región ubicado:</label>
+                                            <label for="consumo-energia" class="col-form-label">Consumo Energía:</label>
                                             <input type="text" class="form-control" id="region" required />
                                         </div>
 
@@ -72,18 +72,18 @@ export default function ModalRegistroNegocio() {
 
                                     <fieldset>
                                         <div class="mb-3">
-                                            <label for="region" class="col-form-label">Región ubicado:</label>
-                                            <input type="text" class="form-control" id="region" required />
+                                            <label for="pais" class="col-form-label">País:</label>
+                                            <input type="text" class="form-control" id="pais" required />
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="region" class="col-form-label">Región ubicado:</label>
-                                            <input type="text" class="form-control" id="region" required />
+                                            <label for="cantidad-negocios" class="col-form-label">Cantidad de negocios:</label>
+                                            <input type="text" class="form-control" id="cantidad-negocios" required />
                                         </div>
 
                                         <div class="mb-3">
-                                            <label for="region" class="col-form-label">Región ubicado:</label>
-                                            <input type="text" class="form-control" id="region" required />
+                                            <label for="fecha-creacion" class="col-form-label">Año que nacio:</label>
+                                            <input type="text" class="form-control" id="fecha-creacion" required />
                                         </div>
 
                                     </fieldset>
