@@ -16,7 +16,7 @@ export default function RegistrarmeModal() {
                             <input type="text" class="form-control" id="nombreCompleto" required />
                         </div>
                         <div class="mb-3">
-                            <label for="cedula" class="col-form-label">Cédula:</label>
+                            <label for="cedula" class="col-form-label">Cedula:</label>
                             <input type="text" class="form-control" id="cedula" required />
                         </div>
                         <div class="mb-3">
