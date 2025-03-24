@@ -1,10 +1,10 @@
 import React from "react";
 import NavBar from "../components/navBar/Navbar";
 import NavBarUsuario from "../components/navBarUsuario/NavBarUsuario";
-import LandingSection from "../components/mainSections/LandingSection";
+import Banner from "../components/banner/Banner";
 import FooterPage from "../components/footer/Footer"
-import ContentSection from "../components/mainSections/ContentSection";
-import TestimonialSection from "../components/mainSections/TestimonialSection";
+import ContentSection from "../components/cardsDescubre/ContentSection";
+import TestimonialSection from "../components/testimonios/TestimonialSection";
 import GraficaImg from '../components/graficasProductos/GraficasProductos'
 
 
@@ -17,7 +17,7 @@ const HomePage = ({ isLoggedIn }) => {
       {isLoggedIn ? <NavBarUsuario /> : <NavBar />}
 
       {/* Carrusel y contenido */}
-      <LandingSection />
+      <Banner />
 
       <ContentSection
         title="¿Qué es Campo Conecta?"

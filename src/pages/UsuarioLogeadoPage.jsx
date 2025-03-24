@@ -1,6 +1,6 @@
 import NavBar from "../components/navBar/Navbar";
 import NavBarUsuario from "../components/navBarUsuario/NavBarUsuario";
-import LandingSection from "../components/mainSections/LandingSection";
+import Banner from "../components/banner/Banner";
 
 export default function UsuarioLogeadoPage({ isLoggedIn }) {
   return (
