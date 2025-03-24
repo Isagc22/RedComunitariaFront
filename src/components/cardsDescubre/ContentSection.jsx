@@ -99,11 +99,10 @@ function ContentSection() {
 
             {/* Botón para ir al Marketplace */}
             <Box sx={{ textAlign: "center", mt: 4 }}>
-              <Link to="/marketplace" style={{ textDecoration: "none" }}>
-                <Button variant="contained" color="primary" size="large">
+                <Button variant="contained"   data-bs-toggle="modal"
+                            data-bs-target="#iniciarSesion" color="primary" size="large">
                   Ir al Mercado
                 </Button>
-              </Link>
             </Box>
           </Container>
         </Box>
