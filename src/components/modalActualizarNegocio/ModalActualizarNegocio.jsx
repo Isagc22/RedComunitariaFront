@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 export default function ModalActualizarNegocio() {
   // Estado inicial del negocio
   const [negocioData, setNegocioData] = useState({
+    id: '', // Identificador único del negocio
     nombreEmprendimiento: '',
     descripcion: '',
     tipo: '',
@@ -14,7 +15,7 @@ export default function ModalActualizarNegocio() {
     consumoEnergia: '',
     pais: '',
     cantidadNegocios: '',
-    fechaNacimiento: ''
+    fechaNacimiento: '',
   });
 
   // Obtener los datos del negocio desde el backend
@@ -24,6 +25,7 @@ export default function ModalActualizarNegocio() {
         const response = await fetch('http://localhost:8080/api/negocio'); // URL del backend
         const data = await response.json();
         setNegocioData({
+          id: data.id, // Incluye el identificador único
           nombreEmprendimiento: data.nombreEmprendimiento,
           descripcion: data.descripcion,
           tipo: data.tipo,
@@ -35,7 +37,7 @@ export default function ModalActualizarNegocio() {
           consumoEnergia: data.consumoEnergia,
           pais: data.pais,
           cantidadNegocios: data.cantidadNegocios,
-          fechaNacimiento: data.fechaNacimiento
+          fechaNacimiento: data.fechaNacimiento,
         });
       } catch (error) {
         console.error('Error al obtener los datos del negocio:', error);
@@ -58,7 +60,7 @@ export default function ModalActualizarNegocio() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/negocio', {
+      const response = await fetch(`http://localhost:8080/api/negocio/${negocioData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

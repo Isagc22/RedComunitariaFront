@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function ModalActualizarUsuario() {
   const [userData, setUserData] = useState({
+    id: '', // Identificador único del usuario
     nombreCompleto: '',
     cedula: '',
     tipoDocumento: 'cc',
@@ -13,13 +14,14 @@ export default function ModalActualizarUsuario() {
     tieneNegocio: null,
   });
 
+  // Obtener los datos del usuario desde el backend
   useEffect(() => {
-    // Simulación de obtener datos del backend (Spring Boot)
     const fetchUserData = async () => {
       try {
         const response = await fetch('http://localhost:8080/api/usuario'); // URL del backend
         const data = await response.json();
         setUserData({
+          id: data.id, // Incluye el identificador único
           nombreCompleto: data.nombreCompleto,
           cedula: data.cedula,
           tipoDocumento: data.tipoDocumento,
@@ -38,6 +40,7 @@ export default function ModalActualizarUsuario() {
     fetchUserData();
   }, []);
 
+  // Manejo de cambios en los campos
   const handleChange = (e) => {
     const { id, value } = e.target;
     setUserData((prevData) => ({
@@ -46,10 +49,11 @@ export default function ModalActualizarUsuario() {
     }));
   };
 
+  // Envío del formulario
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/usuario', {
+      const response = await fetch(`http://localhost:8080/api/usuario/${userData.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -193,16 +197,6 @@ export default function ModalActualizarUsuario() {
                   />
                   <label htmlFor="negocioNo">No</label>
                 </div>
-              </div>
-              <div className="mb-3 form-check">
-                <input
-                  type="checkbox"
-                  className="form-check-input"
-                  id="terminos"
-                  required
-                  checked
-                />
-                <label htmlFor="terminos" className="form-check-label">Conozco y acepto los términos y condiciones</label>
               </div>
               <button type="submit" className="btn btn-primary w-100">Actualizar</button>
             </form>

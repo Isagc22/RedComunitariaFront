@@ -1,40 +1,68 @@
 import './ModalInfoUsuario.css';
-import logoUsuario from '../../assets/usuarioLogo.png'
-import RegistrarNegocioModal from '../modalRegistroNegocio/ModalRegistroNegocio'
+import logoUsuario from '../../assets/usuarioLogo.png';
+import RegistrarNegocioModal from '../modalRegistroNegocio/ModalRegistroNegocio';
+import { useEffect, useState } from 'react';
 
-export default function ModalInfoUsuario() {
-    let nombreUsuario  = 'Isabela'
+export default function ModalInfoUsuario({ userId }) { // Se pasa el ID del usuario seleccionado como prop
+    const [usuarioData, setUsuarioData] = useState(null);
+
+    useEffect(() => {
+        // Función para obtener datos del backend
+        async function fetchUsuarioData() {
+            try {
+                const response = await fetch(`http://tu-backend-api.com/usuarios/${userId}`); // Cambiar URL según tu API
+                const data = await response.json();
+                setUsuarioData(data); // Guardar los datos obtenidos en el estado
+            } catch (error) {
+                console.error('Error al obtener información del usuario:', error);
+            }
+        }
+        if (userId) {
+            fetchUsuarioData(); // Solo obtener datos si hay un userId válido
+        }
+    }, [userId]);
+
     return (
-        <>      <div class="modal fade" id="informacionUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header modal-header-info-usuario">
-                        <div className="info-personal">
-
-                            <div className="contenedor-imagen">                    <img
-                                src={logoUsuario}
-                                alt="Logo"
-                                width="50"
-                                height="50"
-                                className="d-inline-block align-text-top imagen-usuario-cc"
-                            /></div>
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Hola {nombreUsuario}</h1>
+        <>
+            <div className="modal fade" id="informacionUsuario" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header modal-header-info-usuario">
+                            <div className="info-personal">
+                                <div className="contenedor-imagen">
+                                    <img
+                                        src={logoUsuario}
+                                        alt="Logo"
+                                        width="50"
+                                        height="50"
+                                        className="d-inline-block align-text-top imagen-usuario-cc"
+                                    />
+                                </div>
+                                <h1 className="modal-title fs-5" id="exampleModalLabel">
+                                    Hola {usuarioData ? usuarioData.nombre : 'Cargando...'}
+                                </h1>
+                            </div>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                    </div>
-                    <div class="modal-body body-modal-info-usuario">
-                        <div className="perfil-usuario"><i class="bi bi-person-circle"></i> <p>Ver perfil</p></div>
-                        <div className="registrar-negocios-usuario" data-bs-toggle="modal" data-bs-target="#registrar-mi-negocio"> <i class="bi bi-shop"></i> <p>Registrar mi negocio</p></div>
+                        <div className="modal-body body-modal-info-usuario">
+                            {usuarioData ? (
+                                <div>
+                                    <p><strong>Nombre:</strong> {usuarioData.nombre}</p>
+                                    <p><strong>Email:</strong> {usuarioData.email}</p>
+                                    <p><strong>Teléfono:</strong> {usuarioData.telefono}</p>
+                                    {/* Agrega más campos según necesites */}
+                                </div>
+                            ) : (
+                                <p>Cargando información del usuario...</p>
+                            )}
+                        </div>
                         <div className="contenedor-btn-cerrar-sesion">
-                            <button type="button" class="btn-cerrar-sesion-usuario">Cerrar sesion</button>
+                            <button type="button" className="btn-cerrar-sesion-usuario">Cerrar sesión</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
             <RegistrarNegocioModal />
         </>
-    )
+    );
 }

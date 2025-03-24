@@ -4,6 +4,6 @@ import Banner from "../components/banner/Banner";
 
 export default function UsuarioLogeadoPage({ isLoggedIn }) {
   return (
-    <div>UsuarioLogeadoPage</div>
+    <Banner/>
   )
 }
