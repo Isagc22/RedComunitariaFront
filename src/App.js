@@ -5,6 +5,7 @@ import MarketplacePage from "./pages/MarketplacePage";
 import AddProduct from "./pages/AddProduct";
 import Admin from "./pages/VistaAdminPage";
 import UsuarioLogeadoPage from "./pages/UsuarioLogeadoPage";
+import SobreNosotros from './pages/NosotrosPage'
 
 //En esta parate es donde contrala la vista de las paginas 
 function App() {
@@ -19,6 +20,8 @@ function App() {
         <Route path="/add-product" element={<AddProduct />} /> //aqui maneja la vista de agregar productos */ 
         <Route path="/admin" element={<Admin />} /> //aqui maneja la vista del administrador */ 
         <Route path="/usuario" element={<UsuarioLogeadoPage />} /> //aqui maneja la vista del usuario */ 
+        <Route path="/sobre-nosotros" element={<SobreNosotros />} /> //aqui maneja la vista de información sobre nosotros */ 
+
 
 
       </Routes>

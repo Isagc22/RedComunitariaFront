@@ -1,17 +1,17 @@
 import './Footer.css'
 import logoFooter from '../../assets/logo.png'
+import { Link } from "react-router-dom";
 export default function Footer() {
     return (
         <>
             <section className="footer-section">
                 <div className="contenedor">
-                    <div className="informacion-relevante">   
-                        <div className="contenedor-izq-cc"><figure><img src={logoFooter} alt="" /></figure></div>
+                    <div className="informacion-relevante">
+                        <div className="contenedor-izq-cc"><figure><img src={logoFooter} alt="logo_campo_conecta" style={{ width: "50%" }} /></figure></div>
                         <div className="contenedor-der-cc">
                             <ul className='footer'>
-                                <li><strong>Compañia</strong></li>
-                                <li>Lorem ipsum</li>
-                                <li>Lorem ipsum</li>
+                                <Link to="/sobre-nosotros" target='_blank' style={{ textDecoration: "none", color: "black" }}> <li><strong>Conócenos</strong></li></Link>
+
                             </ul>
 
                             <ul className='footer'>

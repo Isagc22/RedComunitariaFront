@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Permanent+Marker&family=Righteous&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 *{
     box-sizing: border-box;
     margin: 0;
@@ -31,4 +32,38 @@ p{
 }
 section {
     padding: 56px 0;
+}
+
+
+.contenedor-cards-nosotros {
+   display: flex;
+   justify-content: space-around;
+   gap: 20px;
+
+}
+
+.contenedor-info-equipo{
+display: flex;
+flex-direction: column;
+gap: 26px;
+}
+
+.descripcion-introduccion {
+    margin: 0 auto;
+    width: 80%;
+    text-align: center;
+}
+
+.descripcion-introduccion  h3{
+    font-size: 28px;
+    font-weight: 700;
+    font-family: "Cinzel", serif;
+}
+.descripcion-introduccion  p{
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+img.card-img-top {
+    height: 200px;
 }

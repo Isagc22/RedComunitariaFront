@@ -7,6 +7,7 @@ import ContentSection from "../components/cardsDescubre/ContentSection";
 import TestimonialSection from "../components/testimonios/TestimonialSection";
 import GraficaImg from '../components/graficasProductos/GraficasProductos'
 
+import NosotrosPage from "./NosotrosPage";
 
 // Página principal de la aplicación
 // Se muestra el contenido principal de la página de inicio
@@ -44,6 +45,8 @@ const HomePage = ({ isLoggedIn }) => {
       />
 
       <FooterPage />
+
+      
     </div>
   );
 };
