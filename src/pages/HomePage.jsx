@@ -5,7 +5,6 @@ import Banner from "../components/banner/Banner";
 import FooterPage from "../components/footer/Footer"
 import ContentSection from "../components/cardsDescubre/ContentSection";
 import TestimonialSection from "../components/testimonios/TestimonialSection";
-import GraficaImg from '../components/graficasProductos/GraficasProductos'
 
 import NosotrosPage from "./NosotrosPage";
 
@@ -37,7 +36,6 @@ const HomePage = ({ isLoggedIn }) => {
         text="Los campesinos publican sus productos, los compradores los descubren y pueden contactarlos directamente."
         showButton={true}
       /> */}
-      <GraficaImg />
       <TestimonialSection
         title="Testimonios"
         text="Esto es un testimonio real de nuestros usuarios satisfechos."
