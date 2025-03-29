@@ -4,148 +4,146 @@ import ModalEliminar from '../modalEliminar/ModalEliminar';
 import ModalActualizarUsuario from '../modalActualizarUsuario/ModalActualizarUsuario';
 
 export default function VistaUsuarios() {
-    // Estados
-    const [usuarios, setUsuarios] = useState([]); // Lista de usuarios
-    const [paginaActual, setPaginaActual] = useState(0); // Página actual
-    const [totalPaginas, setTotalPaginas] = useState(0); // Total de páginas
-    const [tipo, setTipo] = useState(""); // Para el modal
-    const [nombre, setNombre] = useState(""); // Para el modal
-    const [id, setId] = useState(null); // Para el modal
+  // Estado para la lista de datos personales
+  const [datosPersonales, setDatosPersonales] = useState([]);
+  const [tipo, setTipo] = useState(""); // Para el modal
+  const [nombre, setNombre] = useState(""); // Para el modal
+  const [id, setId] = useState(null); // Para el modal
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null); // Para el modal de actualización
 
-    // Función para abrir el modal
-    const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
-        setTipo(tipoEntidad);
-        setNombre(nombreEntidad);
-        setId(idEntidad);
-    };
+  // Función para abrir el modal
+  const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
+    setTipo(tipoEntidad);
+    setNombre(nombreEntidad);
+    setId(idEntidad);
+    const usuario = datosPersonales.find(dato => dato.iddatospersonales === idEntidad);
+    setUsuarioSeleccionado(usuario);
+  };
 
-    // Función para obtener datos del backend
-    const obtenerUsuarios = async (pagina) => {
-        try {
-            const response = await fetch(
-                `/api/usuarios?page=${pagina}&size=10` // Ajustar la URL si es necesario
-            );
-            const data = await response.json();
-            setUsuarios(data.content); // Datos de usuarios
-            setPaginaActual(data.number); // Página actual
-            setTotalPaginas(data.totalPages); // Total de páginas
-        } catch (error) {
-            console.error("Error al obtener los usuarios:", error);
-        }
-    };
 
-    // Llamar a la API al cargar el componente
-    useEffect(() => {
-        obtenerUsuarios(paginaActual);
-    }, [paginaActual]);
+  
+  // Función para obtener datos desde el endpoint de datos personales
+  const obtenerDatosPersonales = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/datosPersonales`);
+      const data = await response.json();
+      setDatosPersonales(data);
+    } catch (error) {
+      console.error("Error al obtener los datos personales:", error);
+    }
+  };
+ // Función para eliminar un usuario
+const eliminarUsuario = async () => {
+    if (!id) return;
+  
+    try {
+      const response = await fetch(`http://localhost:8080/datosPersonales/${id}`, {
+        method: "DELETE",
+      });
+  
+      if (response.ok) {
+        console.log(`Usuario con ID ${id} eliminado correctamente.`);
+        setDatosPersonales(datosPersonales.filter(dato => dato.iddatospersonales !== id));
+      } else {
+        console.error("Error al eliminar el usuario");
+      }
+    } catch (error) {
+      console.error("Error en la petición de eliminación:", error);
+    }
+  };
+  
 
-    // Funciones para cambiar de página
-    const irAPaginaAnterior = () => {
-        if (paginaActual > 0) {
-            setPaginaActual(paginaActual - 1);
-        }
-    };
 
-    const irAPaginaSiguiente = () => {
-        if (paginaActual < totalPaginas - 1) {
-            setPaginaActual(paginaActual + 1);
-        }
-    };
+  // Llamar a la API al cargar el componente
+  useEffect(() => {
+    obtenerDatosPersonales();
+  }, []);
 
-    return (
-        <>
-            <section className="vista-usuarios">
-                <div className="contenedor">
-                    <h2>Vista listado usuarios</h2>
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Cédula</th>
-                                <th>Dirección</th>
-                                <th>Imagen</th>
-                                <th>Teléfono</th>
-                                <th>Correo Electrónico</th>
-                                <th>Negocio</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {usuarios.map((usuario, index) => (
-                                <tr key={usuario.id}>
-                                    <td>{index + 1 + paginaActual * 10}</td>
-                                    <td>{usuario.nombre}</td>
-                                    <td>{usuario.cedula}</td>
-                                    <td>{usuario.direccion}</td>
-                                    <td>
-                                        <img
-                                            src={usuario.imagen}
-                                            alt="Imagen de usuario"
-                                            width="50"
-                                            height="50"
-                                        />
-                                    </td>
-                                    <td>{usuario.telefono}</td>
-                                    <td>{usuario.correoElectronico}</td>
-                                    <td>{usuario.negocio}</td>
-                                    <td className="opciones-usuario">
-                                        <div className="leer">
-                                            <i className="bi bi-eye"></i>
-                                        </div>
-                                        <div
-                                            className="actualizar"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#actualizar-info-usuario"
-                                        >
-                                            <i className="bi bi-pencil"></i>
-                                        </div>
-                                        <div
-                                            className="eliminar-usuario"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#eliminar"
-                                            onClick={() =>
-                                                abrirModal("usuario", usuario.nombre, usuario.id)
-                                            }
-                                        >
-                                            <i className="bi bi-trash"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="paginacion">
-                        <button
-                            className="btn btn-primary"
-                            onClick={irAPaginaAnterior}
-                            disabled={paginaActual === 0}
-                        >
-                            Anterior
-                        </button>
-                        <span className="pagina-info">
-                            Página {paginaActual + 1} de {totalPaginas}
-                        </span>
-                        <button
-                            className="btn btn-primary"
-                            onClick={irAPaginaSiguiente}
-                            disabled={paginaActual === totalPaginas - 1}
-                        >
-                            Siguiente
-                        </button>
+  return (
+    <>
+      <section className="vista-usuarios">
+        <div className="contenedor">
+          <h2>Vista listado de usuarios</h2>
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre Completo</th>
+                <th>Cédula</th>
+                <th>Dirección</th>
+                <th>Imagen</th>
+                <th>Teléfono</th>
+                <th>Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {datosPersonales.map((dato, index) => (
+                <tr key={dato.iddatospersonales}>
+                  <td>{index + 1}</td>
+                  <td>{dato.nombre_completo}</td>
+                  <td>{dato.cedula}</td>
+                  <td>{dato.direccion}</td>
+                  <td>
+                    {dato.imagen ? (
+                      <img
+                        src={`data:image/jpeg;base64,${dato.imagen}`}
+                        alt="Imagen de usuario"
+                        width="50"
+                        height="50"
+                      />
+                    ) : (
+                      "Sin imagen"
+                    )}
+                  </td>
+                  <td>{dato.telefono}</td>
+                  <td className="opciones-usuario">
+                    <div className="leer">
+                      <i className="bi bi-eye"></i>
                     </div>
-                </div>
-            </section>
+                    <div
+  className="actualizar"
+  data-bs-toggle="modal"
+  data-bs-target="#actualizar-info-usuario"
+  onClick={() =>
+    abrirModal("usuario", dato.nombre_completo, dato.iddatospersonales)
+  }
+>
+  <i className="bi bi-pencil"></i>
+</div>
 
-            {/* Modal para eliminar */}
-            <ModalEliminar
-                tipo={tipo}
-                nombre={nombre}
-                onEliminar={() => console.log(`Eliminando ${tipo}: ${nombre}`)}
-            />
+                    <div
+                      className="eliminar-usuario"
+                      data-bs-toggle="modal"
+                      data-bs-target="#eliminar"
+                      onClick={() =>
+                        abrirModal("usuario", dato.nombre_completo, dato.iddatospersonales)
+                      }
+                    >
+                      <i className="bi bi-trash"></i>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
 
-            {/* Modal para actualizar */}
-            <ModalActualizarUsuario />
-        </>
-    );
+      {/* Modal para eliminar */}
+      <ModalEliminar
+  tipo={tipo}
+  nombre={nombre}
+  onEliminar={eliminarUsuario}
+/>
+
+
+      {/* Modal para actualizar */}
+      {usuarioSeleccionado && (
+        <ModalActualizarUsuario usuarioSeleccionado={usuarioSeleccionado || {}} />
+
+)}
+
+
+    </>
+  );
 }

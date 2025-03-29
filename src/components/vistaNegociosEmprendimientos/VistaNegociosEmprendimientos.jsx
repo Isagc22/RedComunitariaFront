@@ -1,143 +1,133 @@
-import React, { useState, useEffect } from "react";
-import './VistaNegociosEmprendimientos.css';
+import React, { useState, useEffect } from "react"; 
+import "./VistaNegociosEmprendimientos.css";
+import ModalActualizarNegocio from "../modalActualizarNegocio/ModalActualizarNegocio";
+import ModalEliminarNegocio from "../modalEliminarNegocio/ModalEliminarNegocio";
 
 export default function VistaNegociosEmprendimientos() {
-    // Estados para la tabla y modal
-    const [emprendimientos, setEmprendimientos] = useState([]); // Lista de emprendimientos
-    const [paginaActual, setPaginaActual] = useState(0); // Página actual
-    const [totalPaginas, setTotalPaginas] = useState(0); // Total de páginas
-    const [tipo, setTipo] = useState(""); // Tipo para el modal
-    const [nombre, setNombre] = useState(""); // Nombre para el modal
-    const [id, setId] = useState(null); // ID para el modal
+  const [emprendimientos, setEmprendimientos] = useState([]);
+  const [tipo, setTipo] = useState("");
+  const [nombre, setNombre] = useState("");
+  const [id, setId] = useState(null);
 
-    // Función para abrir el modal
-    const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
-        setTipo(tipoEntidad);
-        setNombre(nombreEntidad);
-        setId(idEntidad);
-    };
+  // Función para abrir el modal de eliminación
+  const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
+    setTipo(tipoEntidad);
+    setNombre(nombreEntidad);
+    setId(idEntidad);
+  };
 
-    // Función para obtener datos del backend
-    const obtenerEmprendimientos = async (pagina) => {
-        try {
-            const response = await fetch(
-                `/api/emprendimientos?page=${pagina}&size=10`
-            );
-            const data = await response.json();
-            setEmprendimientos(data.content); // Datos de emprendimientos
-            setPaginaActual(data.number); // Página actual
-            setTotalPaginas(data.totalPages); // Total de páginas
-        } catch (error) {
-            console.error("Error al obtener los emprendimientos:", error);
-        }
-    };
+  // Obtener datos del backend
+  const obtenerEmprendimientos = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/emprendimientos`);
+      const data = await response.json();
+      setEmprendimientos(data.content || data || []);
+    } catch (error) {
+      console.error("Error al obtener los emprendimientos:", error);
+    }
+  };
 
-    // Llamar a la API al cargar el componente
-    useEffect(() => {
-        obtenerEmprendimientos(paginaActual);
-    }, [paginaActual]);
+  const eliminarNegocio = async () => {
+    if (!id) {
+      console.error("Error: No se ha seleccionado un negocio para eliminar.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:8080/emprendimientos/${id}`, {
+        method: "DELETE",
+      });
+  
+      if (response.ok) {
+        console.log(`Negocio con ID ${id} eliminado correctamente.`);
+        setEmprendimientos(emprendimientos.filter(dato => dato.id !== id));
+      } else {
+        console.error("Error al eliminar el negocio. Verifica el backend.");
+      }
+    } catch (error) {
+      console.error("Error en la petición de eliminación:", error);
+    }
+  };
+  
 
-    // Funciones para cambiar de página
-    const irAPaginaAnterior = () => {
-        if (paginaActual > 0) {
-            setPaginaActual(paginaActual - 1);
-        }
-    };
+  useEffect(() => {
+    obtenerEmprendimientos();
+  }, []);
 
-    const irAPaginaSiguiente = () => {
-        if (paginaActual < totalPaginas - 1) {
-            setPaginaActual(paginaActual + 1);
-        }
-    };
-
-    return (
-        <>
-            <section className="vista-negocios">
-                <div className="contenedor">
-                    <h2>Vista listado negocios</h2>
-                    <table className="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Descripción</th>
-                                <th>Tipo</th>
-                                <th>Fecha de creación</th>
-                                <th>Estado</th>
-                                <th>Imagen</th>
-                                <th>Ubicación</th>
-                                <th>Producción/Consumo Energía</th>
-                                <th>Historial</th>
-                                <th>Opciones Negocio</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {emprendimientos.map((emprendimiento, index) => (
-                                <tr key={emprendimiento.id}>
-                                    <td>{index + 1 + paginaActual * 10}</td>
-                                    <td>{emprendimiento.nombre}</td>
-                                    <td>{emprendimiento.descripcion}</td>
-                                    <td>{emprendimiento.tipo}</td>
-                                    <td>{emprendimiento.fechaCreacion}</td>
-                                    <td>{emprendimiento.estado}</td>
-                                    <td>
-                                        <img
-                                            src={emprendimiento.imagen}
-                                            alt="Imagen del negocio"
-                                            width="50"
-                                            height="50"
-                                        />
-                                    </td>
-                                    <td>{emprendimiento.ubicacion}</td>
-                                    <td>{emprendimiento.produccionConsumoEnergia}</td>
-                                    <td>{emprendimiento.historial}</td>
-                                    <td className="opciones-negocios">
-                                        <div className="leer-negocio">
-                                            <i className="bi bi-eye"></i>
-                                        </div>
-                                        <div
-                                            className="actualizar-negocio"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#actualizar-info-negocio"
-                                        >
-                                            <i className="bi bi-pencil"></i>
-                                        </div>
-                                        <div
-                                            className="eliminar-negocio"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#eliminar"
-                                            onClick={() =>
-                                                abrirModal("negocio", emprendimiento.nombre, emprendimiento.id)
-                                            }
-                                        >
-                                            <i className="bi bi-trash"></i>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="paginacion">
-                        <button
-                            className="btn btn-primary"
-                            onClick={irAPaginaAnterior}
-                            disabled={paginaActual === 0}
-                        >
-                            Anterior
-                        </button>
-                        <span className="pagina-info">
-                            Página {paginaActual + 1} de {totalPaginas}
-                        </span>
-                        <button
-                            className="btn btn-primary"
-                            onClick={irAPaginaSiguiente}
-                            disabled={paginaActual === totalPaginas - 1}
-                        >
-                            Siguiente
-                        </button>
+  return (
+    <>
+      <section className="vista-negocios">
+        <div className="contenedor">
+          <h2>Vista listado negocios</h2>
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Tipo</th>
+                <th>Fecha de creación</th>
+                <th>Estado</th>
+                <th>Imagen</th>
+                <th>Ubicación</th>
+                <th>Producción/Consumo Energía</th>
+                <th>Historial</th>
+                <th>Opciones Negocio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {emprendimientos.map((emprendimiento, index) => (
+                <tr key={emprendimiento.id}>
+                  <td>{index + 1}</td>
+                  <td>{emprendimiento.nombre}</td>
+                  <td>{emprendimiento.descripcion}</td>
+                  <td>{emprendimiento.tipo}</td>
+                  <td>{emprendimiento.fechaCreacion}</td>
+                  <td>{emprendimiento.estado}</td>
+                  <td>
+                    <img
+                      src={emprendimiento.imagen}
+                      alt="Imagen del negocio"
+                      width="50"
+                      height="50"
+                    />
+                  </td>
+                  <td>{emprendimiento.ubicacion}</td>
+                  <td>{emprendimiento.produccionConsumoEnergia}</td>
+                  <td>{emprendimiento.historial}</td>
+                  <td className="opciones-negocios">
+                    <div className="leer-negocio">
+                      <i className="bi bi-eye"></i>
                     </div>
-                </div>
-            </section>
-        </>
-    );
+                    <div
+                      className="actualizar-negocio"
+                      data-bs-toggle="modal"
+                      data-bs-target="#actualizar-info-negocio"
+                    >
+                      <i className="bi bi-pencil"></i>
+                    </div>
+                    <div
+                      className="eliminar-negocio"
+                      onClick={() =>
+                        abrirModal("negocio", emprendimiento.nombre, emprendimiento.id)
+                      }
+                      data-bs-toggle="modal"
+                      data-bs-target="#eliminar-negocio"
+                    >
+                      <i className="bi bi-trash"></i>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      {/* Modal para eliminar */}
+      <ModalEliminarNegocio tipo={tipo} nombre={nombre} onEliminar={eliminarNegocio} />
+
+      <ModalActualizarNegocio />
+    </>
+  );
 }

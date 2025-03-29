@@ -39,7 +39,12 @@ export default function ModalEliminar({ tipo, nombre, onEliminar }) {
               <button
                 type="button"
                 className="btn btn-danger"
-                onClick={onEliminar}
+                onClick={() => {
+                  onEliminar();
+                  document.getElementById("eliminar").classList.remove("show");
+                  document.body.classList.remove("modal-open");
+                }}
+                data-bs-dismiss="modal"
               >
                 Confirmar
               </button>
