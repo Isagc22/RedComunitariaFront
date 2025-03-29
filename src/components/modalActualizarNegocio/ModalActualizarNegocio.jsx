@@ -22,7 +22,7 @@ export default function ModalActualizarNegocio() {
   useEffect(() => {
     const fetchNegocioData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/negocio'); // URL del backend
+        const response = await fetch('http://localhost:8080/emprendimientos'); // URL del backend
         const data = await response.json();
         setNegocioData({
           id: data.id, // Incluye el identificador único

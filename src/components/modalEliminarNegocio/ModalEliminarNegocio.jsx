@@ -1,6 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export default function ModalEliminarNegocio({ tipo, nombre, id, onEliminar }) {
+  // Estado local para asegurarse de usar el ID actualizado
+  const [localId, setLocalId] = useState(id);
+
+  useEffect(() => {
+    setLocalId(id);
+  }, [id]);
 
   useEffect(() => {
     const modalElement = document.getElementById("eliminar-negocio");
@@ -39,30 +45,23 @@ export default function ModalEliminarNegocio({ tipo, nombre, id, onEliminar }) {
             <h1 className="modal-title fs-5" id="eliminarLabel">
               Eliminar {tipo}
             </h1>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div className="modal-body">
-            <p>¿Estás seguro de que deseas eliminar {tipo} llamado "{nombre}"?</p>
+            <p>
+              ¿Estás seguro de que deseas eliminar {tipo} llamado "{nombre}"?
+            </p>
           </div>
           <div className="modal-footer">
-            <button
-              type="button"
-              className="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
+            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
               Cancelar
             </button>
             <button
               type="button"
               className="btn btn-danger"
               onClick={() => {
-                console.log("Eliminando ID:", id);
-                onEliminar();
+                console.log("Eliminando ID:", localId);
+                onEliminar(localId);
               }}
               data-bs-dismiss="modal"
             >

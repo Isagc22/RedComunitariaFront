@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; 
+import React, { useState, useEffect } from "react";
 import "./VistaNegociosEmprendimientos.css";
 import ModalActualizarNegocio from "../modalActualizarNegocio/ModalActualizarNegocio";
 import ModalEliminarNegocio from "../modalEliminarNegocio/ModalEliminarNegocio";
@@ -9,11 +9,12 @@ export default function VistaNegociosEmprendimientos() {
   const [nombre, setNombre] = useState("");
   const [id, setId] = useState(null);
 
-  // Función para abrir el modal de eliminación
+  // Abre el modal configurando los datos correspondientes
   const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
     setTipo(tipoEntidad);
     setNombre(nombreEntidad);
     setId(idEntidad);
+    console.log("ID seleccionado para eliminar:", idEntidad);
   };
 
   // Obtener datos del backend
@@ -21,26 +22,27 @@ export default function VistaNegociosEmprendimientos() {
     try {
       const response = await fetch(`http://localhost:8080/emprendimientos`);
       const data = await response.json();
+      console.log("Respuesta API:", data);
       setEmprendimientos(data.content || data || []);
     } catch (error) {
       console.error("Error al obtener los emprendimientos:", error);
     }
   };
 
-  const eliminarNegocio = async () => {
-    if (!id) {
+  // Función para eliminar un negocio
+  const eliminarNegocio = async (idNegocio) => {
+    if (!idNegocio) {
       console.error("Error: No se ha seleccionado un negocio para eliminar.");
       return;
     }
-  
     try {
-      const response = await fetch(`http://localhost:8080/emprendimientos/${id}`, {
+      console.log(`Intentando eliminar negocio con ID: ${idNegocio}`);
+      const response = await fetch(`http://localhost:8080/emprendimientos/${idNegocio}`, {
         method: "DELETE",
       });
-  
       if (response.ok) {
-        console.log(`Negocio con ID ${id} eliminado correctamente.`);
-        setEmprendimientos(emprendimientos.filter(dato => dato.id !== id));
+        console.log(`Negocio con ID ${idNegocio} eliminado correctamente.`);
+        setEmprendimientos(emprendimientos.filter((dato) => dato.idemprendimiento !== idNegocio));
       } else {
         console.error("Error al eliminar el negocio. Verifica el backend.");
       }
@@ -48,7 +50,6 @@ export default function VistaNegociosEmprendimientos() {
       console.error("Error en la petición de eliminación:", error);
     }
   };
-  
 
   useEffect(() => {
     obtenerEmprendimientos();
@@ -77,22 +78,22 @@ export default function VistaNegociosEmprendimientos() {
             </thead>
             <tbody>
               {emprendimientos.map((emprendimiento, index) => (
-                <tr key={emprendimiento.id}>
+                <tr key={emprendimiento.idemprendimiento}>
                   <td>{index + 1}</td>
                   <td>{emprendimiento.nombre}</td>
                   <td>{emprendimiento.descripcion}</td>
                   <td>{emprendimiento.tipo}</td>
-                  <td>{emprendimiento.fechaCreacion}</td>
-                  <td>{emprendimiento.estado}</td>
+                  <td>{emprendimiento.fecha_creacion}</td>
+                  <td>{emprendimiento.estado_emprendimiento ? "Activo" : "Inactivo"}</td>
                   <td>
                     <img
-                      src={emprendimiento.imagen}
+                      src={emprendimiento.imagen_emprendimiento}
                       alt="Imagen del negocio"
                       width="50"
                       height="50"
                     />
                   </td>
-                  <td>{emprendimiento.ubicacion}</td>
+                  <td>{emprendimiento.idregiones}</td>
                   <td>{emprendimiento.produccionConsumoEnergia}</td>
                   <td>{emprendimiento.historial}</td>
                   <td className="opciones-negocios">
@@ -109,7 +110,7 @@ export default function VistaNegociosEmprendimientos() {
                     <div
                       className="eliminar-negocio"
                       onClick={() =>
-                        abrirModal("negocio", emprendimiento.nombre, emprendimiento.id)
+                        abrirModal("negocio", emprendimiento.nombre, emprendimiento.idemprendimiento)
                       }
                       data-bs-toggle="modal"
                       data-bs-target="#eliminar-negocio"
@@ -124,8 +125,12 @@ export default function VistaNegociosEmprendimientos() {
         </div>
       </section>
 
-      {/* Modal para eliminar */}
-      <ModalEliminarNegocio tipo={tipo} nombre={nombre} onEliminar={eliminarNegocio} />
+      <ModalEliminarNegocio 
+        tipo={tipo} 
+        nombre={nombre} 
+        id={id} 
+        onEliminar={eliminarNegocio} 
+      />
 
       <ModalActualizarNegocio />
     </>
