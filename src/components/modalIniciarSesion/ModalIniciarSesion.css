@@ -6,3 +6,19 @@ h1#modal{
     font-style: normal;
     margin: 0;
 }
+
+.opcion-registrarse {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 5px 0;
+    font-size: 16px;
+    gap: 10px;
+    flex-direction: column;
+}
+
+span.opcion-de-registro {
+    text-decoration: underline;
+    font-weight: 800;
+    cursor: pointer !important;
+}

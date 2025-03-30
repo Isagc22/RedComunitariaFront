@@ -29,7 +29,8 @@ export default function Navbar() {
                             data-bs-toggle="modal"
                             data-bs-target="#iniciarSesion"
                         >
-                            <i className="bi bi-person-plus"></i> Iniciar sesión
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            Iniciar sesión
                         </button>
 
                         <button
@@ -38,7 +39,8 @@ export default function Navbar() {
                             data-bs-toggle="modal"
                             data-bs-target="#registrarme"
                         >
-                            <i className="bi bi-person-plus"></i> Regístrate
+                           <i class="bi bi-person-plus"></i>
+                           Regístrate
                         </button>
                     </div>
                 </div>
