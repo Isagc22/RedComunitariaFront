@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ModalRegistrarUsuario from '../modalRegistro/ModalRegistrarse'
+import './ModalIniciarSesion.css'
 
 export default function IniciarSesionModal() {
   const [email, setEmail] = useState("");
@@ -44,7 +46,7 @@ export default function IniciarSesionModal() {
   };
 
   return (
-    <div
+    <>    <div
       className="modal fade"
       id="iniciarSesion"
       tabIndex="-1"
@@ -96,14 +98,20 @@ export default function IniciarSesionModal() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-
-              <button type="submit" className="btn btn-primary w-100">
+              <div className="opcion-registrarse">
+                <p>Si no tienes una cuenta registrate <span  data-bs-toggle="modal"
+                            data-bs-target="#registrarme" className="opcion-de-registro">aquí</span></p>
+             
+              <button type="submit" className="btn btn-outline-success">
                 Iniciar sesión
               </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
     </div>
+
+      <ModalRegistrarUsuario /></>
   );
 }
