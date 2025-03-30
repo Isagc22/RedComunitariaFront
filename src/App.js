@@ -7,6 +7,10 @@ import Admin from "./pages/VistaAdminPage";
 import UsuarioLogeadoPage from "./pages/UsuarioLogeadoPage";
 import SobreNosotros from './pages/NosotrosPage'
 import "bootstrap/dist/js/bootstrap.bundle.min";
+// Ejemplo si el archivo está en src/components
+import NoticiaDetalle from './pages/NoticiaDetalle';
+
+
 
 
 //En esta parate es donde contrala la vista de las paginas 
@@ -23,6 +27,7 @@ function App() {
         <Route path="/admin" element={<Admin />} /> //aqui maneja la vista del administrador */ 
         <Route path="/usuario" element={<UsuarioLogeadoPage />} /> //aqui maneja la vista del usuario */ 
         <Route path="/sobre-nosotros" element={<SobreNosotros />} /> //aqui maneja la vista de información sobre nosotros */ 
+        <Route path="/noticia/:id" element={<NoticiaDetalle />} /> //aqui maneja la vista de la noticia */
 
 
 
