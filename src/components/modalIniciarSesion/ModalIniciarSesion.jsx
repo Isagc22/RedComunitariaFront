@@ -18,7 +18,7 @@ export default function IniciarSesionModal() {
         },
         // Se envía el objeto con los campos que espera el backend
         body: JSON.stringify({
-          email_user: email,
+          emailUser: email,
           password_user: password,
         }),
       });
