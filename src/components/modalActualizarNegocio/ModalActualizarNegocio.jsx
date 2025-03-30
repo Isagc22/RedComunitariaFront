@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min";
 
 export default function ModalActualizarNegocio({ negocioSeleccionado }) {
   const [negocioData, setNegocioData] = useState({
@@ -19,21 +20,7 @@ export default function ModalActualizarNegocio({ negocioSeleccionado }) {
 
   useEffect(() => {
     if (negocioSeleccionado) {
-      setNegocioData({
-        id: negocioSeleccionado.id || "",
-        nombreEmprendimiento: negocioSeleccionado.nombreEmprendimiento || "",
-        descripcion: negocioSeleccionado.descripcion || "",
-        tipo: negocioSeleccionado.tipo || "",
-        fechaCreacion: negocioSeleccionado.fechaCreacion || "",
-        estado: negocioSeleccionado.estado || "Activo",
-        imagen: null, 
-        region: negocioSeleccionado.region || "",
-        produccion: negocioSeleccionado.produccion || "",
-        consumoEnergia: negocioSeleccionado.consumoEnergia || "",
-        pais: negocioSeleccionado.pais || "",
-        cantidadNegocios: negocioSeleccionado.cantidadNegocios || "",
-        fechaNacimiento: negocioSeleccionado.fechaNacimiento || "",
-      });
+      setNegocioData({ ...negocioSeleccionado, imagen: null });
     }
   }, [negocioSeleccionado]);
 
@@ -48,36 +35,30 @@ export default function ModalActualizarNegocio({ negocioSeleccionado }) {
   const handleImageUpload = (e) => {
     setNegocioData((prevData) => ({
       ...prevData,
-      imagen: e.target.files[0],
+      imagen: e.target.files[0] || null,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const formData = new FormData();
       Object.keys(negocioData).forEach((key) => {
-        if (negocioData[key] !== null) {
+        if (negocioData[key] !== null && negocioData[key] !== "") {
           formData.append(key, negocioData[key]);
         }
       });
 
-      const response = await fetch(
-        `http://localhost:8080/emprendimientos/${negocioData.id}`,
-        {
-          method: "PUT",
-          body: formData,
-        }
-      );
+      const response = await fetch(`http://localhost:8080/emprendimientos/${negocioData.id}`, {
+        method: "PUT",
+        body: formData,
+      });
 
       if (response.ok) {
         alert("Negocio actualizado correctamente");
-
-        // Cerrar el modal al completar la actualización
-        document.getElementById("actualizar-negocio").classList.remove("show");
-        document.body.classList.remove("modal-open");
-        document.querySelector(".modal-backdrop").remove();
+        const modalElement = document.getElementById("actualizar-negocio");
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) modalInstance.hide();
       } else {
         alert("Error al actualizar el negocio");
       }
@@ -132,9 +113,7 @@ export default function ModalActualizarNegocio({ negocioSeleccionado }) {
                 <label htmlFor="region" className="col-form-label">Región:</label>
                 <input type="text" className="form-control" id="region" value={negocioData.region} onChange={handleChange} required />
               </div>
-              <button type="submit" className="btn btn-primary w-100">
-                Actualizar Negocio
-              </button>
+              <button type="submit" className="btn btn-primary w-100">Actualizar Negocio</button>
             </form>
           </div>
         </div>

@@ -6,6 +6,8 @@ import AddProduct from "./pages/AddProduct";
 import Admin from "./pages/VistaAdminPage";
 import UsuarioLogeadoPage from "./pages/UsuarioLogeadoPage";
 import SobreNosotros from './pages/NosotrosPage'
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
 
 //En esta parate es donde contrala la vista de las paginas 
 function App() {
