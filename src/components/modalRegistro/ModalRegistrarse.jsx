@@ -113,6 +113,22 @@ export default function RegistrarmeModal() {
                 <label className="col-form-label">Tipo de Documento (ID):</label>
                 <input type="number" className="form-control" value={tipoDocumento} onChange={(e) => setTipoDocumento(e.target.value)} required />
               </div>
+
+  <label className="col-form-label">Tipo de Documento (ID):</label>
+  <select
+    className="form-control"
+    value={tipoDocumento}
+    onChange={(e) => setTipoDocumento(e.target.value)}
+    required
+  >
+    <option value="">Seleccione un tipo de documento</option>
+    <option value="1">Nacido Vivo</option>
+    <option value="2">Registro Civil</option>
+    <option value="3">Tarjeta de Identidad</option>
+    <option value="4">Cédula de Ciudadanía</option>
+  </select>
+</div>
+
               <div className="mb-3">
                 <label className="col-form-label">Imagen:</label>
                 <input type="file" className="form-control" onChange={handleImageUpload} />

@@ -28,12 +28,26 @@ export default function IniciarSesionModal() {
         return;
       }
 
+   
       const data = await response.json();
       console.log("Respuesta del log: ", data);
 
       // Guardar usuario y datos personales en localStorage
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
       localStorage.setItem("datosPersonales", JSON.stringify(data.datosPersonales || {}));
+      const usuarioData = await response.json();
+      localStorage.setItem("usuario", JSON.stringify(usuarioData));
+
+      // Obtener datos personales
+      const datosPersonalesResponse = await fetch(`http://localhost:8080/datosPersonales/${usuarioData.idusuarios}`);
+      
+      if (datosPersonalesResponse.ok) {
+        const datosPersonales = await datosPersonalesResponse.json();
+        localStorage.setItem("datosPersonales", JSON.stringify(datosPersonales));
+      } else {
+        console.warn("No se encontraron datos personales para este usuario.");
+      }
+
 
       navigate("/usuario");
     } catch (error) {
@@ -55,6 +69,7 @@ export default function IniciarSesionModal() {
               <form onSubmit={handleLogin}>
                 <div className="mb-3">
                   <label htmlFor="emailLogin" className="col-form-label">Correo Electrónico:</label>
+
                   <input 
                     type="email" 
                     className="form-control" 
@@ -82,6 +97,16 @@ export default function IniciarSesionModal() {
                     Si no tienes una cuenta registrate 
                     <span data-bs-toggle="modal" data-bs-target="#registrarme" className="opcion-de-registro"> aquí</span>
                   </p>
+
+                  <input type="email" className="form-control" id="emailLogin" required placeholder="Ingresa tu correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="passwordLogin" className="col-form-label">Contraseña:</label>
+                  <input type="password" className="form-control" id="passwordLogin" required placeholder="Ingresa tu contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <div className="opcion-registrarse">
+                  <p>Si no tienes una cuenta registrate <span data-bs-toggle="modal" data-bs-target="#registrarme" className="opcion-de-registro">aquí</span></p>
+
                   <button type="submit" className="btn btn-outline-success">Iniciar sesión</button>
                 </div>
               </form>
