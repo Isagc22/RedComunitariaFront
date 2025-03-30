@@ -86,7 +86,6 @@ const LandingSection = () => {
               <div className="overlay">
                 <h2>{slide.title}</h2>
                 <p>{slide.message}</p>
-                <button>¡Conoce más!</button>
               </div>
             </div>
           </div>

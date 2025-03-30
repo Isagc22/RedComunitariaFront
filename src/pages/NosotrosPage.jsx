@@ -1,6 +1,5 @@
 import React from 'react';
 import ImagenPersona from '../assets/persona.jpg'
-import ImagenIsa from '../assets/isa.jpg'
 
 
 export default function NosotrosPage() {
@@ -13,7 +12,7 @@ export default function NosotrosPage() {
                 </div>
                 <div className='contenedor-cards-nosotros'>
                     <div className="card" style={{ width: "288px" }}>
-                        <img src={ImagenIsa} className="card-img-top" alt="..." />
+                        <img src={ImagenPersona} className="card-img-top" alt="..." />
                         <div className="card-body">
                             <h5 className="card-title">Isabela Grisales</h5>
                             <p className="card-text">

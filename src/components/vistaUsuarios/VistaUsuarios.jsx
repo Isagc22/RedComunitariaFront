@@ -96,11 +96,11 @@ const eliminarUsuario = async () => {
                     )}
                   </td>
                   <td>{dato.telefono}</td>
-                  <td className="opciones-usuario">
-                    <div className="leer">
-                      <i className="bi bi-eye"></i>
-                    </div>
-                    <div
+                  <td>
+                   
+                  <div  className="opciones-usuario">
+
+                  <div
   className="actualizar"
   data-bs-toggle="modal"
   data-bs-target="#actualizar-info-usuario"
@@ -121,6 +121,7 @@ const eliminarUsuario = async () => {
                     >
                       <i className="bi bi-trash"></i>
                     </div>
+                  </div>
                   </td>
                 </tr>
               ))}
@@ -138,10 +139,8 @@ const eliminarUsuario = async () => {
 
 
       {/* Modal para actualizar */}
-      {usuarioSeleccionado && (
-        <ModalActualizarUsuario usuarioSeleccionado={usuarioSeleccionado || {}} />
+      <ModalActualizarUsuario usuarioSeleccionado={usuarioSeleccionado} />
 
-)}
 
 
     </>
