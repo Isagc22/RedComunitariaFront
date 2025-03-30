@@ -104,13 +104,9 @@ export default function ModalActualizarUsuario({ usuarioSeleccionado }) {
   };
 
   return (
-    <div
-      className="modal fade"
-      id="actualizar-info-usuario"
-      tabIndex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
+    
+      <div className="modal fade" id="actualizar-info-usuario" tabIndex="-1">
+
       <div className="modal-dialog modal-dialog-scrollable">
         <div className="modal-content">
           <div className="modal-header">
