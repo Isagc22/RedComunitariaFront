@@ -4,8 +4,6 @@ export default function RegistrarmeModal() {
   // Estados de Usuario
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-  // Estado de TipoUsuario (por defecto "2")
   const [idTipoUsuario] = useState(2);
 
   // Estados de DatosPersonales
@@ -23,7 +21,6 @@ export default function RegistrarmeModal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // 1) Crear el usuario
       const usuarioResponse = await fetch("http://localhost:8080/usuarios", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -36,15 +33,9 @@ export default function RegistrarmeModal() {
       });
 
       if (!usuarioResponse.ok) throw new Error("Error creando usuario");
-      
       const usuarioData = await usuarioResponse.json();
-      console.log("Usuario registrado:", usuarioData);
+      if (!usuarioData.idusuarios) throw new Error("El backend no devolvió el ID del usuario.");
 
-      if (!usuarioData.idusuarios) {
-        throw new Error("El backend no devolvió el ID del usuario.");
-      }
-
-      // 2) Crear objeto de datos personales con ID del usuario
       const formData = new FormData();
       formData.append("nombre_completo", nombreCompleto);
       formData.append("cedula", cedula);
@@ -54,17 +45,12 @@ export default function RegistrarmeModal() {
       formData.append("idtipodocumento", tipoDocumento);
       if (imagen) formData.append("imagen", imagen);
 
-      // 3) Enviar datos personales
       const datosResponse = await fetch("http://localhost:8080/datosPersonales", {
         method: "POST",
         body: formData,
       });
 
-      const datosResult = await datosResponse.json();
-      console.log("Respuesta del backend (datos personales):", datosResult);
-
       if (!datosResponse.ok) throw new Error("Error guardando datos personales");
-
       console.log("Registro exitoso!");
     } catch (error) {
       console.error("Error en el registro:", error);
@@ -90,8 +76,7 @@ export default function RegistrarmeModal() {
                 <label className="col-form-label">Contraseña:</label>
                 <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required />
               </div>
-              <input type="hidden" value={idTipoUsuario} readOnly />
-
+              
               <h5>Datos Personales</h5>
               <div className="mb-3">
                 <label className="col-form-label">Nombre Completo:</label>
@@ -110,25 +95,15 @@ export default function RegistrarmeModal() {
                 <input type="text" className="form-control" value={telefono} onChange={(e) => setTelefono(e.target.value)} required />
               </div>
               <div className="mb-3">
-                <label className="col-form-label">Tipo de Documento (ID):</label>
-                <input type="number" className="form-control" value={tipoDocumento} onChange={(e) => setTipoDocumento(e.target.value)} required />
+                <label className="col-form-label">Tipo de Documento:</label>
+                <select className="form-control" value={tipoDocumento} onChange={(e) => setTipoDocumento(e.target.value)} required>
+                  <option value="">Seleccione un tipo de documento</option>
+                  <option value="1">Nacido Vivo</option>
+                  <option value="2">Registro Civil</option>
+                  <option value="3">Tarjeta de Identidad</option>
+                  <option value="4">Cédula de Ciudadanía</option>
+                </select>
               </div>
-
-  <label className="col-form-label">Tipo de Documento (ID):</label>
-  <select
-    className="form-control"
-    value={tipoDocumento}
-    onChange={(e) => setTipoDocumento(e.target.value)}
-    required
-  >
-    <option value="">Seleccione un tipo de documento</option>
-    <option value="1">Nacido Vivo</option>
-    <option value="2">Registro Civil</option>
-    <option value="3">Tarjeta de Identidad</option>
-    <option value="4">Cédula de Ciudadanía</option>
-  </select>
-</div>
-
               <div className="mb-3">
                 <label className="col-form-label">Imagen:</label>
                 <input type="file" className="form-control" onChange={handleImageUpload} />
