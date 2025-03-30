@@ -5,8 +5,8 @@ export default function RegistrarmeModal() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   
-  // Estado de TipoUsuario (por defecto “2”, asumiendo que en la tabla tipousuario es “Usuario”)
-  const [idTipoUsuario] = useState(2); // Valor predeterminado y no editable
+  // Estado de TipoUsuario (por defecto "2")
+  const [idTipoUsuario] = useState(2);
 
   // Estados de DatosPersonales
   const [nombreCompleto, setNombreCompleto] = useState("");
@@ -28,17 +28,21 @@ export default function RegistrarmeModal() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email_user: email,
+          emailUser: email,
           password_user: password,
           estado_user: true,
-          idtipousuario: idTipoUsuario, // <-- Campo oculto, valor predeterminado
+          idtipousuario: idTipoUsuario,
         }),
       });
 
-      if (!usuarioResponse.ok) {
-        throw new Error("Error creando usuario");
-      }
+      if (!usuarioResponse.ok) throw new Error("Error creando usuario");
+      
       const usuarioData = await usuarioResponse.json();
+      console.log("Usuario registrado:", usuarioData);
+
+      if (!usuarioData.idusuarios) {
+        throw new Error("El backend no devolvió el ID del usuario.");
+      }
 
       // 2) Crear objeto de datos personales con ID del usuario
       const formData = new FormData();
@@ -46,10 +50,8 @@ export default function RegistrarmeModal() {
       formData.append("cedula", cedula);
       formData.append("direccion", direccion);
       formData.append("telefono", telefono);
-      formData.append("idusuarios", usuarioData.idusuarios); // <-- lo que devuelva tu backend
+      formData.append("idusuarios", usuarioData.idusuarios);
       formData.append("idtipodocumento", tipoDocumento);
-
-      // Si envías imagen como byte[] en tu backend, la conviertes en multipart:
       if (imagen) formData.append("imagen", imagen);
 
       // 3) Enviar datos personales
@@ -58,13 +60,14 @@ export default function RegistrarmeModal() {
         body: formData,
       });
 
-      if (!datosResponse.ok) {
-        throw new Error("Error guardando datos personales");
-      }
+      const datosResult = await datosResponse.json();
+      console.log("Respuesta del backend (datos personales):", datosResult);
+
+      if (!datosResponse.ok) throw new Error("Error guardando datos personales");
+
       console.log("Registro exitoso!");
     } catch (error) {
-      console.error(error);
-      console.log("Error en el registro");
+      console.error("Error en el registro:", error);
     }
   };
 
@@ -78,77 +81,39 @@ export default function RegistrarmeModal() {
           </div>
           <div className="modal-body">
             <form onSubmit={handleSubmit}>
-              {/* ===== Datos de Usuario ===== */}
               <h5>Datos de Usuario</h5>
               <div className="mb-3">
                 <label className="col-form-label">Correo Electrónico:</label>
-                <input
-                  type="email"
-                  className="form-control"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
               </div>
               <div className="mb-3">
                 <label className="col-form-label">Contraseña:</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required />
               </div>
-              {/*
-                Campo oculto para tipo de usuario.
-                Lo dejamos como "hidden" y no se puede editar.
-              */}
               <input type="hidden" value={idTipoUsuario} readOnly />
 
-              {/* ===== Datos Personales ===== */}
               <h5>Datos Personales</h5>
               <div className="mb-3">
                 <label className="col-form-label">Nombre Completo:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={nombreCompleto}
-                  onChange={(e) => setNombreCompleto(e.target.value)}
-                  required
-                />
+                <input type="text" className="form-control" value={nombreCompleto} onChange={(e) => setNombreCompleto(e.target.value)} required />
               </div>
               <div className="mb-3">
                 <label className="col-form-label">Cédula:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={cedula}
-                  onChange={(e) => setCedula(e.target.value)}
-                  required
-                />
+                <input type="text" className="form-control" value={cedula} onChange={(e) => setCedula(e.target.value)} required />
               </div>
               <div className="mb-3">
                 <label className="col-form-label">Dirección:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={direccion}
-                  onChange={(e) => setDireccion(e.target.value)}
-                  required
-                />
+                <input type="text" className="form-control" value={direccion} onChange={(e) => setDireccion(e.target.value)} required />
               </div>
               <div className="mb-3">
                 <label className="col-form-label">Teléfono:</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  value={telefono}
-                  onChange={(e) => setTelefono(e.target.value)}
-                  required
-                />
+                <input type="text" className="form-control" value={telefono} onChange={(e) => setTelefono(e.target.value)} required />
               </div>
               <div className="mb-3">
+                <label className="col-form-label">Tipo de Documento (ID):</label>
+                <input type="number" className="form-control" value={tipoDocumento} onChange={(e) => setTipoDocumento(e.target.value)} required />
+              </div>
+
   <label className="col-form-label">Tipo de Documento (ID):</label>
   <select
     className="form-control"
@@ -166,13 +131,8 @@ export default function RegistrarmeModal() {
 
               <div className="mb-3">
                 <label className="col-form-label">Imagen:</label>
-                <input
-                  type="file"
-                  className="form-control"
-                  onChange={handleImageUpload}
-                />
+                <input type="file" className="form-control" onChange={handleImageUpload} />
               </div>
-
               <button type="submit" className="btn btn-primary w-100">Registrar</button>
             </form>
           </div>

@@ -10,7 +10,7 @@ export default function ModalInfoUsuario() {
 
   useEffect(() => {
     // Se lee la información del usuario desde el localStorage
-    const storedUser = localStorage.getItem('usuario');
+    const storedUser = localStorage.getItem('datosPersonales');
     if (storedUser) {
       setUsuarioData(JSON.parse(storedUser));
     }
@@ -31,15 +31,17 @@ export default function ModalInfoUsuario() {
               <div className="info-personal">
                 <div className="contenedor-imagen">
                   <img
-                    src={logoUsuario}
-                    alt="Logo"
+                    src={usuarioData?.imagen || logoUsuario}
+                    alt="Foto Usuario"
                     width="50"
                     height="50"
                     className="d-inline-block align-text-top imagen-usuario-cc"
                   />
+
+
                 </div>
                 <h1 className="modal-title fs-5" id="exampleModalLabel">
-                  Hola {usuarioData ? usuarioData.nombre : 'Cargando...'}
+                  Hola {usuarioData ? usuarioData.nombre_completo : 'Cargando...'}
                 </h1>
               </div>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -47,8 +49,7 @@ export default function ModalInfoUsuario() {
             <div className="modal-body body-modal-info-usuario">
               {usuarioData ? (
                 <div>
-                  <p><strong>Nombre:</strong> {usuarioData.nombre}</p>
-                  <p><strong>Email:</strong> {usuarioData.email}</p>
+                  <p><strong>Nombre:</strong> {usuarioData.nombre_completo}</p>
                   <p><strong>Teléfono:</strong> {usuarioData.telefono}</p>
                   {/* Agrega más campos según necesites */}
                 </div>
@@ -57,8 +58,8 @@ export default function ModalInfoUsuario() {
               )}
             </div>
             <div className="contenedor-btn-cerrar-sesion">
-              <button 
-                type="button" 
+              <button
+                type="button"
                 className="btn-cerrar-sesion-usuario"
                 onClick={handleCerrarSesion}
               >

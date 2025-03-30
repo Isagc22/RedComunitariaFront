@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './NavBarUsuario.css';
 import logo from '../../assets/logo.png';
+import logoUsuario from '../../assets/usuarioLogo.png';
+
 import UsuarioInfoModal from '../modalInfoUsuario/ModalInfoUsuario';
 
 export default function NavBarUsuario() {
@@ -8,7 +10,7 @@ export default function NavBarUsuario() {
 
   useEffect(() => {
     // Leer el usuario del localStorage si existe
-    const storedUser = localStorage.getItem('usuario');
+    const storedUser = localStorage.getItem('datosPersonales');
     if (storedUser) {
       setUsuarioData(JSON.parse(storedUser));
     }
@@ -36,15 +38,17 @@ export default function NavBarUsuario() {
           >
             <div className="d-flex contenedor-informacion-usuario-nav">
               <p className="nombre-usuario-campo-conecta">
-                Bienvenido {usuarioData ? usuarioData.nombre : 'Invitado'}
+                Bienvenido {usuarioData ? usuarioData.nombre_completo : 'Invitado'}
               </p>
               <img
-                src={usuarioData ? usuarioData.foto : 'ruta/por-defecto.png'}
+                src={usuarioData?.imagen || logoUsuario}
                 alt="Foto Usuario"
                 width="50"
                 height="50"
                 className="d-inline-block align-text-top imagen-usuario-cc"
               />
+
+
             </div>
           </button>
         </div>
