@@ -29,7 +29,7 @@ export default function ModalActualizarUsuario({ usuarioSeleccionado }) {
         direccion: usuarioSeleccionado.direccion || "",
         telefono: usuarioSeleccionado.telefono || "",
         imagen: null, // Siempre inicializamos en null para la carga nueva
-        email: usuarioSeleccionado.email_user || "", // Si está disponible
+        email: usuarioSeleccionado.emailUser || "", // Si está disponible
         password: usuarioSeleccionado.password_user || "", // Si está disponible
       });
     }
@@ -62,7 +62,7 @@ export default function ModalActualizarUsuario({ usuarioSeleccionado }) {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email_user: userData.email,
+            emailUser: userData.email,
             password_user: userData.password,
             estado_user: true,
           }),

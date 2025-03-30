@@ -1,10 +1,18 @@
 import './ModalInfoUsuario.css';
 import logoUsuario from '../../assets/usuarioLogo.png';
 import RegistrarNegocioModal from '../modalRegistroNegocio/ModalRegistroNegocio';
+import ActualizarMiInformacion from '../modalActualizarUsuario/ModalActualizarUsuario'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function ModalInfoUsuario() {
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null); // Para el modal de actualización
+
+  const [datosPersonales, setDatosPersonales] = useState([]);
+  const [tipo, setTipo] = useState(""); // Para el modal
+  const [nombre, setNombre] = useState(""); // Para el modal
+  const [id, setId] = useState(null); // Para el modal
   const [usuarioData, setUsuarioData] = useState(null);
   const navigate = useNavigate();
 
@@ -19,7 +27,17 @@ export default function ModalInfoUsuario() {
   const handleCerrarSesion = () => {
     // Elimina la información de la sesión y redirige a la página de login o landing
     localStorage.removeItem('usuario');
+    localStorage.removeItem('datosPersonales');
+
     navigate('/'); // Ajusta la ruta de redirección según tu aplicación
+  };
+  // Función para abrir el modal
+  const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
+    setTipo(tipoEntidad);
+    setNombre(nombreEntidad);
+    setId(idEntidad);
+    const usuario = datosPersonales.find(dato => dato.iddatospersonales === idEntidad);
+    setUsuarioSeleccionado(usuario);
   };
 
   return (
@@ -70,6 +88,8 @@ export default function ModalInfoUsuario() {
         </div>
       </div>
       <RegistrarNegocioModal />
+      {/* Modal para actualizar */}
+      <ActualizarMiInformacion usuarioSeleccionado={usuarioSeleccionado} />
     </>
   );
 }
