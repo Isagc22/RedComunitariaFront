@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ModalRegistrarUsuario from '../modalRegistro/ModalRegistrarse';
+import './ModalIniciarSesion.css';
 
 export default function IniciarSesionModal() {
   const [email, setEmail] = useState("");
@@ -10,100 +12,70 @@ export default function IniciarSesionModal() {
     e.preventDefault();
 
     try {
-      // Ajusta la URL del endpoint de login según tu configuración
       const response = await fetch("http://localhost:8080/usuarios/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        // Se envía el objeto con los campos que espera el backend
         body: JSON.stringify({
-          email_user: email,
+          emailUser: email,
           password_user: password,
         }),
       });
 
       if (!response.ok) {
-        // Por ejemplo, si las credenciales son incorrectas
         alert("Credenciales incorrectas");
         return;
       }
 
-      // Se obtiene la respuesta del backend
-      const data = await response.json();
+      const usuarioData = await response.json();
+      localStorage.setItem("usuario", JSON.stringify(usuarioData));
 
-      // Se guarda la información del usuario (puede usarse para mantener el estado de autenticación)
-      localStorage.setItem("usuario", JSON.stringify(data));
+      // Obtener datos personales
+      const datosPersonalesResponse = await fetch(`http://localhost:8080/datosPersonales/${usuarioData.idusuarios}`);
+      
+      if (datosPersonalesResponse.ok) {
+        const datosPersonales = await datosPersonalesResponse.json();
+        localStorage.setItem("datosPersonales", JSON.stringify(datosPersonales));
+      } else {
+        console.warn("No se encontraron datos personales para este usuario.");
+      }
 
-      // Redirige a la ruta del usuario
       navigate("/usuario");
-
     } catch (error) {
       alert("Error al iniciar sesión: " + error.message);
     }
   };
 
   return (
-    <div
-      className="modal fade"
-      id="iniciarSesion"
-      tabIndex="-1"
-      aria-labelledby="modal"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h1 className="modal-title fs-5" id="titulo-modal-cc">
-              Iniciar sesión
-            </h1>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-
-          <div className="modal-body">
-            <form onSubmit={handleLogin}>
-              <div className="mb-3">
-                <label htmlFor="emailLogin" className="col-form-label">
-                  Correo Electrónico:
-                </label>
-                <input
-                  type="email"
-                  className="form-control"
-                  id="emailLogin"
-                  required
-                  placeholder="Ingresa tu correo electrónico"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <div className="mb-3">
-                <label htmlFor="passwordLogin" className="col-form-label">
-                  Contraseña:
-                </label>
-                <input
-                  type="password"
-                  className="form-control"
-                  id="passwordLogin"
-                  required
-                  placeholder="Ingresa tu contraseña"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-
-              <button type="submit" className="btn btn-primary w-100">
-                Iniciar sesión
-              </button>
-            </form>
+    <>    
+      <div className="modal fade" id="iniciarSesion" tabIndex="-1" aria-labelledby="modal" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="titulo-modal-cc">Iniciar sesión</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleLogin}>
+                <div className="mb-3">
+                  <label htmlFor="emailLogin" className="col-form-label">Correo Electrónico:</label>
+                  <input type="email" className="form-control" id="emailLogin" required placeholder="Ingresa tu correo electrónico" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="passwordLogin" className="col-form-label">Contraseña:</label>
+                  <input type="password" className="form-control" id="passwordLogin" required placeholder="Ingresa tu contraseña" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <div className="opcion-registrarse">
+                  <p>Si no tienes una cuenta registrate <span data-bs-toggle="modal" data-bs-target="#registrarme" className="opcion-de-registro">aquí</span></p>
+                  <button type="submit" className="btn btn-outline-success">Iniciar sesión</button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      <ModalRegistrarUsuario />
+    </>
   );
 }

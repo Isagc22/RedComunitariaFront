@@ -69,13 +69,13 @@ function MarketplacePage() {
       </Grid>
 
       {/* Botón para volver al inicio */}
-      <Box sx={{ textAlign: "center", mt: 4 }}>
+      {/* <Box sx={{ textAlign: "center", mt: 4 }}>
         <Link to="/" style={{ textDecoration: "none" }}>
           <Button variant="outlined" color="secondary" size="large">
             Volver al Inicio
           </Button>
         </Link>
-      </Box>
+      </Box> */}
     </Container>
   );
 }
