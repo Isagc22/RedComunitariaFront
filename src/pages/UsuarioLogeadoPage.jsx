@@ -15,7 +15,7 @@ export default function UsuarioLogeadoPage({ isLoggedIn }) {
       <Graficas/>
       <CardsInfo/>
       <Footer/>
-      
+      <NavBarUsuario/>
     </>
   )
 }

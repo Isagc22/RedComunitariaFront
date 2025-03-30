@@ -59,10 +59,13 @@ export default function ModalEliminarNegocio({ tipo, nombre, id, onEliminar }) {
             <button
               type="button"
               className="btn btn-danger"
+
               onClick={() => {
-                console.log("Eliminando ID:", localId);
                 onEliminar(localId);
+                document.getElementById("eliminar-negocio").classList.remove("show");
+                document.body.classList.remove("modal-open");
               }}
+              
               data-bs-dismiss="modal"
             >
               Confirmar
