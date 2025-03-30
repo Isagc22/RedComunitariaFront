@@ -96,11 +96,10 @@ export default function VistaNegociosEmprendimientos() {
                   <td>{emprendimiento.idregiones}</td>
                   <td>{emprendimiento.produccionConsumoEnergia}</td>
                   <td>{emprendimiento.historial}</td>
-                  <td className="opciones-negocios">
-                    <div className="leer-negocio">
-                      <i className="bi bi-eye"></i>
-                    </div>
-                    <div
+                  <td >
+                    
+                  <div className="opciones-negocios">
+                  <div
                       className="actualizar-negocio"
                       data-bs-toggle="modal"
                       data-bs-target="#actualizar-info-negocio"
@@ -117,6 +116,7 @@ export default function VistaNegociosEmprendimientos() {
                     >
                       <i className="bi bi-trash"></i>
                     </div>
+                  </div>
                   </td>
                 </tr>
               ))}
