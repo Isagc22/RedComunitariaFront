@@ -67,3 +67,7 @@ gap: 26px;
 img.card-img-top {
     height: 200px;
 }
+
+font{
+    vertical-align: bottom !important;
+}
