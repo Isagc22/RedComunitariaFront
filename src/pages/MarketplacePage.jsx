@@ -118,9 +118,9 @@ function MarketplacePage() {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button variant="contained" color="primary" size="small">
+                {/* <Button variant="contained" color="primary" size="small">
                   Contactar
-                </Button>
+                </Button> */}
                 <Button variant="contained" color="primary" size="small" onClick={() => handleOpen(product)}>
                   Añadir comentario
                 </Button>
@@ -130,13 +130,13 @@ function MarketplacePage() {
         ))}
       </Grid>
 
-      <Box sx={{ textAlign: "center", mt: 4 }}>
+      {/* <Box sx={{ textAlign: "center", mt: 4 }}>
         <Link to="/" style={{ textDecoration: "none" }}>
           <Button variant="outlined" color="secondary" size="large">
             Volver al Inicio
           </Button>
         </Link>
-      </Box>
+      </Box> */}
 
       {/* Modal para añadir comentario */}
       <Dialog open={open} onClose={handleClose}>

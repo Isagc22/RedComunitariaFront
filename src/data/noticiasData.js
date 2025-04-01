@@ -30,7 +30,7 @@ const noticias = [
         titulo: "Frutas colombianas conquistan el exterior",
         contenido: "Exportaciones de frutas frescas crecieron 29%. Aguacate, mango, gulupa y uchuva entre los más vendidos.",
         cuerpo: "Las exportaciones de frutas frescas alcanzaron US$201 millones. Productos como el aguacate Hass...",
-        image: "https://via.placeholder.com/400x200.png?text=Frutas"
+        image: "./frutasC.png"
     },
     {
         id: "5",
@@ -38,7 +38,7 @@ const noticias = [
         titulo: "Repoblamiento pesquero en Córdoba",
         contenido: "Plan de ordenamiento busca sostenibilidad en la pesca artesanal. Se combinan turismo ecológico y protección de especies.",
         cuerpo: "Durante 2024, la producción pesquera registró un crecimiento del 18,2%. En el embalse de Urrá...",
-        image: "https://via.placeholder.com/400x200.png?text=Pescado"
+        image: "./pesca.jpg"
     },
     {
         id: "6",
@@ -46,7 +46,7 @@ const noticias = [
         titulo: "Cacao colombiano rompe récord de producción",
         contenido: "Con más de 67 mil toneladas, el país alcanza su mejor cosecha. Santander lidera con el 41% del total nacional.",
         cuerpo: "El cacao colombiano alcanzó en 2024 su mayor producción histórica. Santander aportó 28.044 toneladas...",
-        image: "https://via.placeholder.com/400x200.png?text=Cacao"
+        image: "./cacao.jpg"
     }
 ];
 

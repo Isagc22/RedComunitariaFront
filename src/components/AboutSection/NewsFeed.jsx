@@ -13,7 +13,9 @@ import noticias from '../../data/noticiasData';
 
 const NewsFeed = () => {
     return (
-        <div className="news-grid">
+   <section className='seccion-noticias'>
+       <div className="contenedor">
+          <div className="news-grid">
             {noticias.map((noticia) => (
                 <div key={noticia.id} className="news-card">
                     <img src={noticia.image} alt={noticia.titulo} className="news-image" />
@@ -21,11 +23,13 @@ const NewsFeed = () => {
                         <div className="news-date">Publicado el: {noticia.fecha}</div>
                         <h3 className="news-title">{noticia.titulo}</h3>
                         <p className="news-description">{noticia.contenido}</p>
-                        <Link to={`/noticia/${noticia.id}`} className="news-link">+ Ver más</Link>
+                        <Link to={`/noticia/${noticia.id}`} target='_blank' className="news-link">Ver más</Link>
                     </div>
                 </div>
             ))}
         </div>
+      </div>
+   </section>
     );
 };
 

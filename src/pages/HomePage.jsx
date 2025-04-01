@@ -15,7 +15,7 @@ const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const user = localStorage.getItem("usuario");
     
     // Si el usuario existe y no está vacío, actualiza el estado
     if (user && user !== "null") {

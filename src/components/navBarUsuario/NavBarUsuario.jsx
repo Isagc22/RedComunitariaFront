@@ -20,7 +20,7 @@ export default function NavBarUsuario() {
     <>
       <nav className="navbar bg-body-tertiary navbar-campo-conecta">
         <div className="container-fluid contenedor-info-nav">
-          <a className="navbar-brand navbar-cc-principal" href="#">
+          <a className="navbar-brand navbar-cc-principal" href="/">
             <img
               src={logo}
               alt="Logo"

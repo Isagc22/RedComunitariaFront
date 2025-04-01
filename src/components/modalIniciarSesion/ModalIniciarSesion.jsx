@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min";
 import ModalRegistrarUsuario from '../modalRegistro/ModalRegistrarse';
 import './ModalIniciarSesion.css';
 
@@ -10,7 +11,7 @@ export default function IniciarSesionModal() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
       const response = await fetch("http://localhost:8080/usuarios/login", {
         method: "POST",
@@ -22,26 +23,41 @@ export default function IniciarSesionModal() {
           password_user: password,
         }),
       });
-
+  
       if (!response.ok) {
         alert("Credenciales incorrectas");
         return;
       }
-
+  
       const data = await response.json();
       console.log("Respuesta del log: ", data);
-
+  
       // Guardar usuario y datos personales en localStorage
       localStorage.setItem("usuario", JSON.stringify(data.usuario));
       localStorage.setItem("datosPersonales", JSON.stringify(data.datosPersonales || {}));
-
+  
+      // Cerrar modal manualmente
+      const modalElement = document.getElementById("iniciarSesion");
+      if (modalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+  
       // Redireccionar a la página de usuario
       navigate("/usuario");
+  
+      // Recargar la página después de la redirección (opcional si aún hay problemas visuales)
+      setTimeout(() => {
+        window.location.reload();
+      }, 100); // Pequeño delay para asegurar que la redirección ocurre antes de la recarga
     } catch (error) {
       alert("Error al iniciar sesión: " + error.message);
       console.error("Error en login:", error);
     }
   };
+  
 
   return (
     <>    
