@@ -2,19 +2,51 @@ import React, { useState, useEffect } from "react";
 import "./VistaNegociosEmprendimientos.css";
 import ModalActualizarNegocio from "../modalActualizarNegocio/ModalActualizarNegocio";
 import ModalEliminarNegocio from "../modalEliminarNegocio/ModalEliminarNegocio";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min";
 
 export default function VistaNegociosEmprendimientos() {
   const [emprendimientos, setEmprendimientos] = useState([]);
   const [tipo, setTipo] = useState("");
   const [nombre, setNombre] = useState("");
   const [id, setId] = useState(null);
+  const [negocioSeleccionado, setNegocioSeleccionado] = useState(null);
 
   // Abre el modal configurando los datos correspondientes
-  const abrirModal = (tipoEntidad, nombreEntidad, idEntidad) => {
+  const abrirModalEliminar = (tipoEntidad, nombreEntidad, idEntidad) => {
     setTipo(tipoEntidad);
     setNombre(nombreEntidad);
     setId(idEntidad);
     console.log("ID seleccionado para eliminar:", idEntidad);
+  };
+
+  // Nueva función para abrir modal de actualizar
+  const abrirModalActualizar = (emprendimiento) => {
+    // Adaptar el formato del objeto para que coincida con el esperado por ModalActualizarNegocio
+    const negocioAdaptado = {
+      id: emprendimiento.idemprendimiento,
+      nombreEmprendimiento: emprendimiento.nombre,
+      descripcion: emprendimiento.descripcion,
+      tipo: emprendimiento.tipo,
+      fechaCreacion: emprendimiento.fecha_creacion,
+      estado: emprendimiento.estado_emprendimiento ? "Activo" : "Inactivo",
+      region: emprendimiento.idregiones,
+      produccion: emprendimiento.produccionConsumoEnergia,
+      consumoEnergia: emprendimiento.produccionConsumoEnergia,
+      // Si hay campos adicionales que necesites incluir:
+      pais: "",  // Agrega el valor correcto si está disponible
+      cantidadNegocios: "",  // Agrega el valor correcto si está disponible
+      fechaNacimiento: "", // Agrega el valor correcto si está disponible
+    };
+    
+    setNegocioSeleccionado(negocioAdaptado);
+    // Usa setTimeout para asegurar que el DOM está actualizado
+    setTimeout(() => {
+      const modalElement = document.getElementById("actualizar-negocio");
+      if (modalElement) {
+        const modal = new bootstrap.Modal(modalElement);
+        modal.show();
+      }
+    }, 100);
   };
 
   // Obtener datos del backend
@@ -53,6 +85,20 @@ export default function VistaNegociosEmprendimientos() {
 
   useEffect(() => {
     obtenerEmprendimientos();
+    
+    // Asegurarnos de que bootstrap esté cargado correctamente
+    // Este paso es crucial para resolver el error con .backdrop
+    const initBootstrap = () => {
+      // Ya importamos bootstrap en la parte superior, solo necesitamos asegurarnos
+      // de que esté disponible
+      if (typeof bootstrap !== 'undefined') {
+        console.log("Bootstrap cargado correctamente");
+      } else {
+        console.error("Bootstrap no está disponible");
+      }
+    };
+    
+    initBootstrap();
   }, []);
 
   return (
@@ -96,27 +142,25 @@ export default function VistaNegociosEmprendimientos() {
                   <td>{emprendimiento.idregiones}</td>
                   <td>{emprendimiento.produccionConsumoEnergia}</td>
                   <td>{emprendimiento.historial}</td>
-                  <td >
-                    
-                  <div className="opciones-negocios">
-                  <div
-                      className="actualizar-negocio"
-                      data-bs-toggle="modal"
-                      data-bs-target="#actualizar-info-negocio"
-                    >
-                      <i className="bi bi-pencil"></i>
+                  <td>
+                    <div className="opciones-negocios">
+                      <div
+                        className="actualizar-negocio"
+                        onClick={() => abrirModalActualizar(emprendimiento)}
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </div>
+                      <div
+                        className="eliminar-negocio"
+                        onClick={() =>
+                          abrirModalEliminar("negocio", emprendimiento.nombre, emprendimiento.idemprendimiento)
+                        }
+                        data-bs-toggle="modal"
+                        data-bs-target="#eliminar-negocio"
+                      >
+                        <i className="bi bi-trash"></i>
+                      </div>
                     </div>
-                    <div
-                      className="eliminar-negocio"
-                      onClick={() =>
-                        abrirModal("negocio", emprendimiento.nombre, emprendimiento.idemprendimiento)
-                      }
-                      data-bs-toggle="modal"
-                      data-bs-target="#eliminar-negocio"
-                    >
-                      <i className="bi bi-trash"></i>
-                    </div>
-                  </div>
                   </td>
                 </tr>
               ))}
@@ -132,7 +176,10 @@ export default function VistaNegociosEmprendimientos() {
         onEliminar={eliminarNegocio} 
       />
 
-      <ModalActualizarNegocio />
+      <ModalActualizarNegocio 
+        negocioSeleccionado={negocioSeleccionado} 
+        onActualizarExito={obtenerEmprendimientos}
+      />
     </>
   );
 }

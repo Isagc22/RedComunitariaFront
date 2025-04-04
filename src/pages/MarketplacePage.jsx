@@ -24,7 +24,7 @@ function MarketplacePage() {
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
-  const [userId, setUserId] = useState("");
+  const [idusuarios, setIdusuarios] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8080/emprendimientos")
@@ -42,6 +42,15 @@ function MarketplacePage() {
       });
   }, []);
 
+  useEffect(() => {
+    const storedIdusuarios = localStorage.getItem("userId");
+    if (storedIdusuarios && storedIdusuarios !== "null" && storedIdusuarios !== "undefined") {
+      setIdusuarios(storedIdusuarios);
+    } else {
+      console.error("No se encontró un idusuarios válido en localStorage");
+    }
+  }, []);
+
   const handleOpen = (product) => {
     setSelectedProduct(product);
     setOpen(true);
@@ -51,12 +60,14 @@ function MarketplacePage() {
     setOpen(false);
     setComment("");
     setRating(0);
-    setUserId("");
   };
 
   const handleCommentSubmit = () => {
-    if (!comment.trim() || !rating || !userId) return;
-    
+    if (!comment.trim() || !rating || !idusuarios) {
+      console.error("Faltan datos para enviar el comentario", { comment, rating, idusuarios });
+      return;
+    }
+
     const currentDate = new Date().toISOString();
 
     const newComment = {
@@ -65,7 +76,7 @@ function MarketplacePage() {
       calificacion: rating,
       fecha_comentario: currentDate,
       fecha_registro: currentDate,
-      idusuarios: userId
+      idusuarios: idusuarios
     };
 
     fetch("http://localhost:8080/comentariosYCalificaciones", {
@@ -157,14 +168,6 @@ function MarketplacePage() {
             name="calificacion"
             value={rating}
             onChange={(event, newValue) => setRating(newValue)}
-          />
-          <TextField
-            margin="dense"
-            label="ID Usuario"
-            type="number"
-            fullWidth
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
           />
         </DialogContent>
         <DialogActions>
