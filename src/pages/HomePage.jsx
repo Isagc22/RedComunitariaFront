@@ -5,8 +5,8 @@ import Banner from "../components/banner/Banner";
 import FooterPage from "../components/footer/Footer";
 import ContentSection from "../components/cardsDescubre/ContentSection";
 import TestimonialSection from "../components/testimonios/TestimonialSection";
-import AboutSection from "../components/AboutSection/AboutSection";
-import NewsFeed from "../components/AboutSection/NewsFeed";
+import AboutSection from "../components/aboutSection/AboutSection";
+import NewsFeed from "../components/nuevasnoticias/NewsFeed";
 
 
 

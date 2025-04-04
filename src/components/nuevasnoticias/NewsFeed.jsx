@@ -2,8 +2,8 @@
 import React from 'react';
 import './NewsFeed.css';
 import { Link } from 'react-router-dom';
-import './NewsFeed.css'; // 
 import noticias from '../../data/noticiasData';
+import './NewsFeed.css'
 
 
 

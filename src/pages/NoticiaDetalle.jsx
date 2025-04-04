@@ -1,10 +1,11 @@
-import { useParams, useNavigate } from 'react-router-dom'; // agrega useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import noticias from '../data/noticiasData';
 import { useState } from 'react';
+import './NoticiaDetalle.css';
 
 const NoticiaDetalle = () => {
     const { id } = useParams();
-    const navigate = useNavigate(); // hook de navegación
+    const navigate = useNavigate();
     const noticia = noticias.find(n => n.id === id);
 
     const [likes, setLikes] = useState(0);
@@ -18,35 +19,32 @@ const NoticiaDetalle = () => {
         }
     };
 
-    if (!noticia) return <p>Noticia no encontrada</p>;
+    if (!noticia) return <p className="mensaje-error">Noticia no encontrada</p>;
 
     return (
-        <div style={{ padding: 20, maxWidth: 800, margin: "auto" }}>
-            <button onClick={() => navigate('/')} style={{ marginBottom: 20 }}>
-            ⬅️ Volver al inicio
-            </button>
-
-            <h1>{noticia.titulo}</h1>
-            <img src={noticia.image} alt={noticia.titulo} style={{ width: '100%' }} />
-            <p>{noticia.cuerpo}</p>
-            <p><strong>Publicado el:</strong> {noticia.fecha}</p>
-
-            <button onClick={() => setLikes(likes + 1)}>👍 Me gusta ({likes})</button>
-
-            <div style={{ marginTop: 30 }}>
+        <div className="noticia-detalle">
+            <button className="btn-volver" onClick={() => navigate('/')}>⬅️ Volver al inicio</button>
+            
+            <h1 className="noticia-titulo">{noticia.titulo}</h1>
+            <img src={noticia.image} alt={noticia.titulo} className="noticia-imagen" />
+            <p className="noticia-cuerpo">{noticia.cuerpo}</p>
+            <p className="noticia-fecha"><strong>Publicado el:</strong> {noticia.fecha}</p>
+            
+            <button className="btn-like" onClick={() => setLikes(likes + 1)}>👍 Me gusta ({likes})</button>
+            
+            <div className="comentarios">
                 <h3>Comentarios</h3>
                 <textarea
                     rows="3"
                     value={nuevoComentario}
                     onChange={(e) => setNuevoComentario(e.target.value)}
                     placeholder="Escribe un comentario..."
-                    style={{ width: '100%' }}
                 />
-                <button onClick={agregarComentario}>Comentar</button>
-
-                <ul>
+                <button className="btn-comentar" onClick={agregarComentario}>Comentar</button>
+                
+                <ul className="lista-comentarios">
                     {comentarios.map((c, i) => (
-                        <li key={i}>{c}</li>
+                        <li key={i} className="comentario">{c}</li>
                     ))}
                 </ul>
             </div>
@@ -55,4 +53,3 @@ const NoticiaDetalle = () => {
 };
 
 export default NoticiaDetalle;
-

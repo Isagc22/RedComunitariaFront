@@ -4,10 +4,12 @@ import { Container, Typography, Grid, Card, CardContent, Box } from "@mui/materi
 import { FaLeaf } from "react-icons/fa";
 import { GiFarmTractor } from "react-icons/gi";
 import { MdOutlinePeople } from "react-icons/md";
+import './AboutSection'
 
 function AboutSection() {
     return (
-        <section style={{backgroundColor: "#FFFFFF"}}>
+        <section className="section-about">
+
             <div className="contenedor">
                 <Box sx={{ py: 6 }}>
                     <Container>

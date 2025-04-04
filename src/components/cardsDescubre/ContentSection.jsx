@@ -99,8 +99,8 @@ function ContentSection() {
 
             {/* Botón para ir al Marketplace */}
             <Box sx={{ textAlign: "center", mt: 4 }}>
-                <Button variant="contained"   data-bs-toggle="modal"
-                            data-bs-target="#iniciarSesion" color="primary" size="large">
+                <Button  id='boton-cards-descubre'  data-bs-toggle="modal"
+                            data-bs-target="#iniciarSesion" size="large">
                   Ir al Mercado
                 </Button>
             </Box>
