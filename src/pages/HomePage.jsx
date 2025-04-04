@@ -5,19 +5,26 @@ import Banner from "../components/banner/Banner";
 import FooterPage from "../components/footer/Footer";
 import ContentSection from "../components/cardsDescubre/ContentSection";
 import TestimonialSection from "../components/testimonios/TestimonialSection";
+import authService from "../services/authService";
 
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    // Verificar autenticación usando el servicio
+    const checkAuth = () => {
+      const authenticated = authService.isAuthenticated();
+      setIsLoggedIn(authenticated);
+    };
     
-    // Si el usuario existe y no está vacío, actualiza el estado
-    if (user && user !== "null") {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
+    checkAuth();
+    
+    // Volver a verificar cuando el localStorage cambie
+    window.addEventListener('storage', checkAuth);
+    
+    return () => {
+      window.removeEventListener('storage', checkAuth);
+    };
   }, []);
 
   return (
