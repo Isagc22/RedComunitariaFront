@@ -133,7 +133,7 @@ export default function VistaNegociosEmprendimientos() {
                   <td>{emprendimiento.estado_emprendimiento ? "Activo" : "Inactivo"}</td>
                   <td>
                     <img
-                      src={emprendimiento.imagen_emprendimiento}
+                      src={emprendimiento.imagen_emprendimiento ? `data:image/jpeg;base64,${emprendimiento.imagen_emprendimiento}` : "https://via.placeholder.com/200"}
                       alt="Imagen del negocio"
                       width="50"
                       height="50"

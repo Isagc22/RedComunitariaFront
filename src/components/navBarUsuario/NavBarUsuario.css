@@ -5,9 +5,32 @@
 }
 
 .nombre-usuario-campo-conecta{
-    margin: 0;
-    font-family: "Revalia", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 16px;
+    color: #3f4c6b;
+    font-weight: bold;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.imagen-usuario-cc {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dropdown-menu {
+    min-width: 200px;
+}
+
+.nav-link {
+    color: #3f4c6b;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #008000;
+}
+
+.navbar-campo-conecta {
+    height: 100px;
 }

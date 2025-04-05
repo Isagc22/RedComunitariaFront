@@ -57,23 +57,35 @@ export default function ModalActualizarNegocio({ negocioSeleccionado, onActualiz
     e.preventDefault();
     try {
       const formData = new FormData();
-      
-      // Importante: estos nombres deben coincidir con los atributos del modelo Java
-      formData.append("id", negocioData.id);
+      const estadoBooleano = negocioData.estado === "Activo";
+
+      // Estos nombres deben coincidir exactamente con los nombres de los atributos 
+      // del modelo Emprendimiento en el backend
+      formData.append("idemprendimiento", negocioData.id);
       formData.append("nombre", negocioData.nombreEmprendimiento);
       formData.append("descripcion", negocioData.descripcion);
       formData.append("tipo", negocioData.tipo);
-      formData.append("fecha_creacion", negocioData.fechaCreacion);
-      formData.append("estado_emprendimiento", negocioData.estado === "Activo");
-      formData.append("idregiones", negocioData.region);  // ← esto debe coincidir con lo que espera el backend
-      formData.append("idusuarios", "1"); // ⚠️ AJUSTA esto según el usuario real
-  
+      
+      if (negocioData.fechaCreacion) {
+        formData.append("fecha_creacion", negocioData.fechaCreacion);
+      }
+      
+      formData.append("estado_emprendimiento", estadoBooleano);
+      formData.append("idregiones", negocioData.region);
+      formData.append("idusuarios", 1); // ID del usuario actual
+      
+      // La imagen debe enviarse con el nombre "imagen", no "imagen_emprendimiento"
       if (negocioData.imagen) {
         formData.append("imagen", negocioData.imagen);
       }
-  
+      
+      // Para depuración - mostrar lo que estamos enviando
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      
       const response = await fetch(`http://localhost:8080/emprendimientos/${negocioData.id}/actualizar`, {
-        method: "POST", // ← recuerda que cambiamos PUT por POST
+        method: "POST",
         body: formData,
       });
   

@@ -82,3 +82,39 @@ font{
 }
 
 
+body {
+  margin: 0;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-y: auto !important; /* Forzar scroll vertical */
+  height: auto !important; /* Permitir que el contenido determine la altura */
+  position: relative !important; /* Asegura comportamiento normal */
+}
+
+html {
+  overflow-y: auto !important; /* Forzar scroll en html también */
+  height: auto !important;
+}
+
+/* Eliminar cualquier modal backdrop extra */
+.modal-backdrop + .modal-backdrop {
+  display: none;
+}
+
+/* Asegurar que los modales no bloqueen el scroll */
+.modal {
+  overflow-y: auto !important;
+}
+
+/* Revertir cualquier bloqueo de scroll en el body cuando hay un modal */
+body.modal-open {
+  overflow: auto !important;
+  padding-right: 0 !important;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
