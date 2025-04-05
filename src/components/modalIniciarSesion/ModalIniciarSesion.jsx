@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min";
 import ModalRegistrarUsuario from '../modalRegistro/ModalRegistrarse';
 import authService from '../../services/authService';
+import { FaEnvelope, FaLock } from "react-icons/fa";
 import './ModalIniciarSesion.css';
 
 export default function IniciarSesionModal() {
@@ -76,6 +78,7 @@ export default function IniciarSesionModal() {
       for (let i = 1; i <= 5; i++) {
         setTimeout(forceCleanupModals, i * 100);
       }
+
       
       // Añadir una pequeña espera antes de navegar para asegurar que la limpieza se completa
       setTimeout(() => {
@@ -85,6 +88,31 @@ export default function IniciarSesionModal() {
         // Aplicar una última limpieza después de la navegación
         setTimeout(forceCleanupModals, 200);
       }, 300);
+
+      const data = await response.json();
+      console.log("Respuesta del log: ", data);
+
+      // Guardar usuario y datos personales en localStorage
+      localStorage.setItem("usuario", JSON.stringify(data.usuario));
+      localStorage.setItem("datosPersonales", JSON.stringify(data.datosPersonales || {}));
+
+      // Cerrar modal manualmente
+      const modalElement = document.getElementById("iniciarSesion");
+      if (modalElement) {
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+          modalInstance.hide();
+        }
+      }
+
+      // Redireccionar a la página de usuario
+      navigate("/usuario");
+
+      // Recargar la página después de la redirección
+      setTimeout(() => {
+        window.location.reload();
+      }, 100);
+
     } catch (error) {
       console.error("Error en login:", error);
       if (error.response) {
@@ -103,12 +131,12 @@ export default function IniciarSesionModal() {
   };
 
   return (
-    <>    
-      <div className="modal fade" id="iniciarSesion" tabIndex="-1" aria-labelledby="modal" aria-hidden="true">
+    <>
+      <div className="modal fade" id="iniciarSesion" tabIndex="-1" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5" id="titulo-modal-cc">Iniciar sesión</h1>
+              <h1 className="modal-title fs-5">Iniciar sesión</h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
@@ -119,6 +147,7 @@ export default function IniciarSesionModal() {
               )}
               <form onSubmit={handleLogin}>
                 <div className="mb-3">
+
                   <label htmlFor="usernameLogin" className="col-form-label">Correo Electrónico o Usuario:</label>
                   <input 
                     type="text" 
@@ -129,23 +158,28 @@ export default function IniciarSesionModal() {
                     value={username} 
                     onChange={(e) => setUsername(e.target.value)} 
                   />
+
                 </div>
+
                 <div className="mb-3">
                   <label htmlFor="passwordLogin" className="col-form-label">Contraseña:</label>
-                  <input 
-                    type="password" 
-                    className="form-control" 
-                    id="passwordLogin" 
-                    required 
-                    placeholder="Ingresa tu contraseña" 
-                    value={password} 
-                    onChange={(e) => setPassword(e.target.value)} 
-                  />
+                  <div className="input-group">
+                    <span className="input-icon"><FaLock /></span>
+                    <input 
+                      type="password" 
+                      className="form-control" 
+                      id="passwordLogin" 
+                      required 
+                      placeholder="Ingresa tu contraseña" 
+                      value={password} 
+                      onChange={(e) => setPassword(e.target.value)} 
+                    />
+                  </div>
                 </div>
 
                 <div className="opcion-registrarse">
-                  <p>Si no tienes una cuenta, regístrate 
-                    <span data-bs-toggle="modal" data-bs-target="#registrarme" className="opcion-de-registro"> aquí</span>
+                  <p>¿No tienes una cuenta?  
+                    <span data-bs-toggle="modal" data-bs-target="#registrarme" className="opcion-de-registro"> Regístrate aquí</span>
                   </p>
                 </div>
 

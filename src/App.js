@@ -11,8 +11,15 @@ import GraficasDatosEnergia from './pages/GraficasDatosEnergia'
 import RegistroProduccionConsumo from './pages/RegistroProduccionConsumo'
 import authService from './services/authService';
 import "bootstrap/dist/js/bootstrap.bundle.min";
+
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from './contexts/AuthContext';
+
+// Ejemplo si el archivo está en src/components
+import NoticiaDetalle from './pages/NoticiaDetalle';
+
+
+
 
 // Componente para rutas protegidas
 const ProtectedRoute = ({ children, requiredRole = null }) => {
@@ -110,13 +117,27 @@ function App() {
   }, []);
 
   return (
+
     <AuthProvider>
       <BrowserRouter>
         <ModalBackdropCleaner />
         <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} />
-          <Route path="/Marketplace" element={<MarketplacePage />} />
+      
+    
+
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage isLoggedIn={isLoggedIn} />} /> //aqui maneja la vista principal 
+        <Route path="/Marketplace" element={<MarketplacePage />} /> //aqui maneja la vista del mercado
+
+        <Route path="/add-product" element={<AddProduct />} /> //aqui maneja la vista de agregar productos */ 
+        <Route path="/admin" element={<Admin />} /> //aqui maneja la vista del administrador */ 
+        <Route path="/usuario" element={<UsuarioLogeadoPage />} /> //aqui maneja la vista del usuario */ 
+        <Route path="/sobre-nosotros" element={<SobreNosotros />} /> //aqui maneja la vista de información sobre nosotros */ 
+        <Route path="/noticia/:id" element={<NoticiaDetalle />} /> //aqui maneja la vista de la noticia */
+
+
+
 
           <Route 
             path="/add-product" 
@@ -161,7 +182,8 @@ function App() {
           
           <Route path="/estadisticas-energia" element={<ProtectedRoute><GraficasDatosEnergia /></ProtectedRoute>} />
           <Route path="/registro-produccion-consumo" element={<ProtectedRoute><RegistroProduccionConsumo /></ProtectedRoute>} />
-        </Routes>
+       </Routes>
+    </Router>  
       </BrowserRouter>
     </AuthProvider>
   );

@@ -41,7 +41,6 @@ const slides = [
     message: "Frutas frescas y deliciosas.",
   }
 
-  // Aquí agregarás más pueblos y productos después
 ];
 
 // Definición rápida de flechas directamente en el archivo

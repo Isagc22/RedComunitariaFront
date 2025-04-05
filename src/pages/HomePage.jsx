@@ -6,6 +6,11 @@ import FooterPage from "../components/footer/Footer";
 import ContentSection from "../components/cardsDescubre/ContentSection";
 import TestimonialSection from "../components/testimonios/TestimonialSection";
 import authService from "../services/authService";
+import AboutSection from "../components/aboutSection/AboutSection";
+import NewsFeed from "../components/nuevasnoticias/NewsFeed";
+
+
+
 
 const HomePage = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,6 +45,11 @@ const HomePage = () => {
         text="Una red social comunitaria que conecta personas, productos y tradiciones del campo colombiano."
         showButton={false}
       />
+
+      <AboutSection />
+
+      <NewsFeed />
+      
 
       <TestimonialSection
         title="Testimonios"

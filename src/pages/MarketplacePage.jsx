@@ -138,47 +138,47 @@ function MarketplacePage() {
           Mercado Virtual Campesino
         </Typography>
 
-        <Grid container spacing={4}>
-          {products.map((product) => (
-            <Grid item key={product.idemprendimiento} xs={12} sm={6} md={4}>
-              <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-                <CardMedia
-                  component="img"
-                  image={product.imagen_emprendimiento ? `data:image/jpeg;base64,${product.imagen_emprendimiento}` : "https://via.placeholder.com/200"}
-                  alt={product.nombre}
-                  sx={{ height: 200 }}
-                />
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom>
-                    {product.nombre}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {product.descripcion}
-                  </Typography>
-                  <Typography variant="body1" sx={{ mt: 1 }}>
-                    <strong>Región ID:</strong> {product.idregiones}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button variant="contained" color="primary" size="small">
-                    Contactar
-                  </Button>
-                  <Button variant="contained" color="primary" size="small" onClick={() => handleOpen(product)}>
-                    Añadir comentario
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+      <Grid container spacing={4}>
+        {products.map((product) => (
+          <Grid item key={product.idemprendimiento} xs={12} sm={6} md={4}>
+            <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+              <CardMedia
+                component="img"
+                image={product.imagen_emprendimiento ? `data:image/jpeg;base64,${product.imagen_emprendimiento}` : "https://via.placeholder.com/200"}
+                alt={product.nombre}
+                sx={{ height: 200 }}
+              />
+              <CardContent sx={{ flexGrow: 1 }}>
+                <Typography variant="h6" gutterBottom>
+                  {product.nombre}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {product.descripcion}
+                </Typography>
+                <Typography variant="body1" sx={{ mt: 1 }}>
+                  <strong>Región ID:</strong> {product.idregiones}
+                </Typography>
+              </CardContent>
+              <CardActions>
+                {/* <Button variant="contained" color="primary" size="small">
+                  Contactar
+                </Button> */}
+                <Button variant="contained" color="primary" size="small" onClick={() => handleOpen(product)}>
+                  Añadir comentario
+                </Button>
+              </CardActions>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
-        <Box sx={{ textAlign: "center", mt: 4 }}>
-          <Link to="/" style={{ textDecoration: "none" }}>
-            <Button variant="outlined" color="secondary" size="large">
-              Volver al Inicio
-            </Button>
-          </Link>
-        </Box>
+      {/* <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Link to="/" style={{ textDecoration: "none" }}>
+          <Button variant="outlined" color="secondary" size="large">
+            Volver al Inicio
+          </Button>
+        </Link>
+      </Box> */}
 
         {/* Modal para añadir comentario */}
         <Dialog open={open} onClose={handleClose}>
